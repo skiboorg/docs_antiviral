@@ -711,13 +711,6 @@ button:focus {
   margin-bottom: 15px;
 }
 
-.collection-item__img img {
-  max-width: 350px;
-  max-height: 450px;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
 .collection-item__name {
   font-size: 16px;
   margin-bottom: 5px;
