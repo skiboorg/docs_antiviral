@@ -8,7 +8,7 @@ from django.utils.safestring import mark_safe
 
 class Category(models.Model):
     name = models.CharField('Название категории', max_length=255, blank=True, null=True)
-    name_slug = models.CharField(max_length=255, blank=True, null=True,editable=False)
+    name_slug = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField('Изображение категории', upload_to='images/catalog/categories/', blank=True)
     page_h1 = models.CharField('Тег H1', max_length=255, blank=True, null=True)
     page_title = models.CharField('Title страницы', max_length=255, blank=True, null=True)
