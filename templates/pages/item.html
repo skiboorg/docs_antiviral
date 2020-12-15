@@ -46,7 +46,7 @@
 {#                        selected#}
 
 
-                        <span @click="selectColor(index)" :class="{'selected':selectedColor===index}" v-for="(color,index) in itemInfo" :style="'background:  ' + color.color_hex  " class="item-info__color "></span>
+                        <span @click="selectColor(index)" :class="{'selected':selectedColor===color.color_id}" v-for="(color,index) in itemInfo" :style="'background:  ' + color.color_hex  " class="item-info__color "></span>
 
                     </div>
                     <div class="item-info__params">
@@ -60,7 +60,7 @@
                                     <path d="M3 3L0 0H6L3 3Z" fill="#519999"/>
                                 </svg>
                                 <div class="custom-select__values">
-                                    <p v-for="size in sizes" @click="selectedSize=size.size_id,selectedSizeName=size.size_name" class="text-center">[[size.size_name]]</p>
+                                    <p v-for="size in sizes" @click="selectSize(size.size_name,size.size_id,size.heights)" class="text-center">[[size.size_name]]</p>
                                 </div>
 
                             </div>
@@ -68,7 +68,6 @@
 
                         </div>
                         <div class="item-info__param">
-
                             <p class="item-info__subtitle">2. рост</p>
                               <div class="custom-select bordered">
                                 <p class="custom-select__selected">[[selectedHeightName]]</p>
@@ -76,14 +75,14 @@
                                     <path d="M3 3L0 0H6L3 3Z" fill="#519999"/>
                                 </svg>
                                 <div class="custom-select__values">
-                                    <p v-for="height in heights" @click="selectedHeight=height.type_slug,selectedHeightName=height.height_name" class="text-center">[[height.height_name]]</p>
+                                    <p v-for="height in heights" @click="selectedHeight=height.height_id,selectedHeightName=height.height_name" class="text-center">[[height.height_name]]</p>
                                 </div>
 
                             </div>
                         </div>
                     </div>
                     <p class="item-info__table">Таблица размеров</p>
-                    <div class="btn">
+                    <div @click="addItem('{{ item.name }}','{{ item.images.first.image.url }}',{{ item.id }})" class="btn">
                         <p>В корзину</p>
                     </div>
                     <div class="item-info__features">

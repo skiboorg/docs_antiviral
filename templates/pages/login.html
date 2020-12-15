@@ -4,12 +4,13 @@
       <div class="container">
         <div class="login-form">
             <h1 class="login-form__title">Вход</h1>
-            <form action="{% url 'log_in' %}" method="post">{% csrf_token %}
+            <form class="mb-15" action="{% url 'log_in' %}" method="post">{% csrf_token %}
 
                 <input type="email" required name="email" placeholder="Введите почту">
                 <input type="password" required name="password" placeholder="Пароль">
                 <button type="submit" class="btn">Войти</button>
             </form>
+            <p style="text-align: center; opacity: .5">Нет аккаунта? <a style="text-decoration: underline" href="{% url 'reg_page' %}">Регистрация</a></p>
 
         </div>
     </div>

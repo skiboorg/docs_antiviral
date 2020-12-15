@@ -1,0 +1,100 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block content %}
+      <div class="container">
+        <h1 class="section-header">Ваша корзина</h1>
+        <div >
+        <form class="cart-wrapper" action="{% url 'new_order' %}" method="post">{% csrf_token%}
+            <div class="cart-left">
+                <div class="cart-items">
+                 <main-cart-item
+                                v-for="(item,index) in headerCartItems"
+                                v-bind:item="item"
+                                v-bind:key="item.id"
+                                v-bind:index="index"
+                                v-on:userdelete="remove"
+                                v-on:del_qt="del_qt"
+                                v-on:add_qt="add_qt"
+                        ></main-cart-item>
+
+                </div>
+
+                <h3 class="section-header b-bottom ">Оформление заказа</h3>
+
+                <div class="cart-grid b-bottom">
+                    <div class="cart-grid-step"><p>1/3 данные</p></div>
+                    <div class="cart-grid-form">
+                        <input type="text" name="phone"  placeholder="Телефон" value="{% if request.user.phone %}{{ request.user.phone }}{% endif %}">
+                        <input type="text" name="email" placeholder="Электронная почта" value="{{ request.user.email }}">
+                        <input type="text" name="fio" placeholder="ФИО" value="{% if  request.user.fio %}{{ request.user.fio }}{% endif %}">
+                    </div>
+                </div>
+                 <div class="cart-grid b-bottom">
+                    <div class="cart-grid-step"><p>2/3 данные</p></div>
+                    <div class="cart-grid-form">
+                        <p class="mb-15">Выберите способ доставки</p>
+                        <label @click="deliveryPrice=100" class="cart-radio" for="d-1">
+                            <input type="radio" name="delivery" id="d-1" value="Курьером1">
+                            <p class="cart-radio__p1">Курьером1</p>
+                            <p class="cart-radio__p2">от 1 дня<br>100 ₽</p>
+                            <span class="checkmark"></span>
+                        </label>
+                         <label @click="deliveryPrice=300" class="cart-radio" for="d-2">
+                            <input type="radio" name="delivery" id="d-2" value="Курьером2">
+                             <p class="cart-radio__p1">Курьером2</p>
+                            <p class="cart-radio__p2">от 1 дня<br>300 ₽</p>
+                             <span class="checkmark"></span>
+                        </label>
+                        <input type="text" name="street" placeholder="Улица">
+                        <div class="cart-grid-form__group">
+                            <input type="text" name="num" placeholder="Дом">
+                             <input type="text" name="num1" placeholder="Квартира/офис">
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-grid b-bottom">
+                    <div class="cart-grid-step"><p>3/3 оплата</p></div>
+                    <div class="cart-grid-form">
+                        <p class="mb-15">Выберите способ оплаты</p>
+                        <label class="cart-radio" for="d-11">
+                            <input type="radio" name="pay" id="d-11" value="Картой">
+                            <p class="cart-radio__p1">Картой онлайн, Apple Pay, Google Pay</p>
+
+                            <span class="checkmark"></span>
+                        </label>
+                         <label class="cart-radio" for="d-21">
+                            <input type="radio" name="pay" id="d-21" value="Курьером">
+                            <p class="cart-radio__p1">Курьером</p>
+
+                             <span class="checkmark"></span>
+                        </label>
+
+
+                    </div>
+                </div>
+                <div class="cart-grid ">
+                    <div class="cart-grid-step"><p>дополнительно</p></div>
+                    <div class="cart-grid-form">
+                        <textarea class="mb-15" name="comment" id="" cols="30" rows="10" placeholder="Комментарий курьеру"></textarea>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="cart-right">
+                <div style="position: sticky;top: 20px"  class="cart-total">
+                    <p class="cart-total__info">Доставка <span class="color-green">[[deliveryPrice]] ₽ </span></p>
+                    <p class="cart-total__info">сумма заказа <span class="color-green">[[cartTotal]] ₽ </span></p>
+                    <p class="cart-total__summ">итого <span class="color-green">[[cartTotal + deliveryPrice]] ₽</span> </p>
+                    <p class="cart-total__promo">Промокод (если есть) <span class="color-green">АКТИВИРОВАТЬ</span></p>
+                    <button type="submit" class="btn">оформить заказ</button>
+                    <p class="cart-total__text">Нажимая на кнопку «оплатить заказ», я принимаю условия <a href="">публичной оферты</a> и <a
+                            href="">политики конфиденциальности</a></p>
+                </div>
+                <p class="cart-total__link hide-mob-600"><a href="{% url 'delivery' %}">условия доставки и оплаты</a></p>
+            </div>
+        </form>
+        </div>
+    </div>
+{% endblock %}

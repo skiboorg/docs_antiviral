@@ -36,7 +36,7 @@ def order(request, order_code):
 def account_edit(request):
 
     client = request.user
-
+    print(request.POST)
     if request.POST:
         form = UpdateForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -44,11 +44,11 @@ def account_edit(request):
             client.profile_ok = True
             client.save(force_update=True)
             print(form.errors)
-        return render(request, 'lk/account_edit.html', locals())
+        return render(request, 'pages/lk.html', locals())
     else:
 
         form = UpdateForm(instance=client)
-        return render(request, 'lk/account_edit.html', locals())
+        return render(request, 'pages/lk.html', locals())
 
 
 def wishlist(request):

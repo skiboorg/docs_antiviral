@@ -461,6 +461,7 @@ button:focus {
 }
 
 .header-wrapper {
+  position: relative;
   max-width: 1180px;
   padding: 0 10px;
   margin: 0 auto;
@@ -629,6 +630,60 @@ button:focus {
   right: -10px;
 }
 
+.header-cart {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 70px;
+  background: #FFFFFF;
+  z-index: 10;
+  width: 300px;
+  -webkit-transition: all .2s linear;
+  -o-transition: all .2s linear;
+  transition: all .2s linear;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.header-cart.headerCartActive {
+  opacity: 1;
+  pointer-events: all;
+  top: 80px;
+}
+
+.header-cart__item {
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  border: 1px solid #e0e0e0;
+  border-bottom: none;
+}
+
+.header-cart__item:first-child {
+  border-top: none;
+}
+
+.header-cart__item img {
+  width: 40px;
+  height: 50px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.header-cart__item p {
+  font-size: 14px;
+}
+
 .categories-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -639,6 +694,7 @@ button:focus {
   position: relative;
   height: 580px;
   background-size: cover !important;
+  cursor: pointer;
 }
 
 .categories-item.item1 {
@@ -1416,9 +1472,7 @@ button:focus {
 }
 
 .cart-right {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
+
   margin-bottom: 50px;
 }
 
@@ -1556,6 +1610,7 @@ button:focus {
   border: 1px solid #e0e0e0;
   padding: 25px;
   margin-bottom: 15px;
+  background: #FFFFFF;
 }
 
 .cart-total .btn {

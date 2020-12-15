@@ -49,7 +49,8 @@ class User(AbstractUser):
     phone = models.CharField('Телефон', max_length=50, blank=True, null=True)
     comment = models.TextField('Комментарий', blank=True, null=True)
     is_allow_email = models.BooleanField('Согласен на рассылку', default=True)
-
+    size = models.CharField('Размер', max_length=50, blank=True, null=True)
+    height = models.CharField('Рост', max_length=50, blank=True, null=True)
     profile_ok = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'

@@ -38,7 +38,7 @@
 
                     <p>Настройки</p>
                 </div>
-                <div class="lk-menu__desktop--item">
+                <div @click="this.window.location.href='/user/logout/'" class="lk-menu__desktop--item">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0)">
                             <path d="M15.0385 17.4278H16.9125V21.1758C16.9125 22.7258 15.6515 23.9866 14.1015 23.9866H2.81085C1.26105 23.9866 0 22.7258 0 21.1758V2.81085C0 1.26105 1.26105 0 2.81085 0H14.1015C15.6515 0 16.9125 1.26105 16.9125 2.81085V6.55884H15.0385V2.81085C15.0385 2.29431 14.6182 1.8739 14.1015 1.8739H2.81085C2.29431 1.8739 1.8739 2.29431 1.8739 2.81085V21.1758C1.8739 21.6923 2.29431 22.1127 2.81085 22.1127H14.1015C14.6182 22.1127 15.0385 21.6923 15.0385 21.1758V17.4278ZM19.5829 7.57617L18.2578 8.90131L20.4128 11.0565H8.2923V12.9304H20.4128L18.2578 15.0853L19.5829 16.4105L24 11.9934L19.5829 7.57617Z" fill="#E74343"/>
@@ -81,7 +81,7 @@
                         <path d="M12 6.5625C9.00173 6.5625 6.5625 9.00178 6.5625 12C6.5625 14.9982 9.00173 17.4375 12 17.4375C14.9983 17.4375 17.4375 14.9982 17.4375 12C17.4375 9.00178 14.9983 6.5625 12 6.5625ZM12 15.5625C10.0357 15.5625 8.4375 13.9644 8.4375 12C8.4375 10.0356 10.0357 8.4375 12 8.4375C13.9643 8.4375 15.5625 10.0356 15.5625 12C15.5625 13.9644 13.9643 15.5625 12 15.5625Z" />
                     </svg>
                 </div>
-                <div class="lk-mob-menu__item">
+                <div @click="this.window.location.href='/user/logout/'" class="lk-mob-menu__item">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0)">
                             <path d="M15.0385 17.4278H16.9125V21.1758C16.9125 22.7258 15.6515 23.9866 14.1015 23.9866H2.81085C1.26105 23.9866 0 22.7258 0 21.1758V2.81085C0 1.26105 1.26105 0 2.81085 0H14.1015C15.6515 0 16.9125 1.26105 16.9125 2.81085V6.55884H15.0385V2.81085C15.0385 2.29431 14.6182 1.8739 14.1015 1.8739H2.81085C2.29431 1.8739 1.8739 2.29431 1.8739 2.81085V21.1758C1.8739 21.6923 2.29431 22.1127 2.81085 22.1127H14.1015C14.6182 22.1127 15.0385 21.6923 15.0385 21.1758V17.4278ZM19.5829 7.57617L18.2578 8.90131L20.4128 11.0565H8.2923V12.9304H20.4128L18.2578 15.0853L19.5829 16.4105L24 11.9934L19.5829 7.57617Z" fill="#E74343"/>
@@ -98,13 +98,14 @@
             </div>
             <div v-if="tabActive==='profileTab'" class="lk-tab">
                 <h1 class="lk-tab__title b-bottom">Мой профиль</h1>
-                <form action="">
+                <form action="{% url 'account_edit' %}" method="post">{% csrf_token %}
                 <div class="lk-tab-grid b-bottom">
                     <div class="lk-tab-grid__item">
                         <p  class="lk-tab-grid__item--title"> Как вас зовут?</p>
 
-                            <input type="text" placeholder="Имя">
-                            <input type="text" placeholder="Фамилия">
+                            <input type="text" placeholder="Телефон" name="phone" value="{% if  request.user.phone %}{{ request.user.phone }}{% endif %}">
+                            <input type="text" placeholder="ФИО" name="fio" value="{% if  request.user.fio %}{{ request.user.fio }}{% endif %}">
+
 
 
                     </div>
@@ -166,19 +167,19 @@
                         <div class="lk-tab-grid__item--group">
                             <div class="">
                                 <p class="item-info__subtitle">размер</p>
-                                <select >
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
+                                <select name="size">
+                                    <option {% if request.user.size == '42' %}selected{% endif %} value="42">42</option>
+                                    <option {% if request.user.size == '43' %}selected{% endif %} value="43">43</option>
+                                    <option {% if request.user.size == '44' %}selected{% endif %} value="44">44</option>
+                                    <option {% if request.user.size == '45' %}selected{% endif %} value="45">45</option>
                                 </select>
                             </div>
                             <div class=""> <p class="item-info__subtitle">рост</p>
-                                <select >
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
+                                <select name="height" >
+                                    <option {% if request.user.height == '170см' %}selected{% endif %} value="170см">170см</option>
+                                    <option {% if request.user.height == '180см' %}selected{% endif %} value="180см">180см</option>
+                                    <option {% if request.user.height == '190см' %}selected{% endif %} value="190см">190см</option>
+                                    <option {% if request.user.height == '200см' %}selected{% endif %} value="200см">200см</option>
                                 </select></div>
 
 

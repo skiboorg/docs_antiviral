@@ -1,7 +1,16 @@
 import json
 
+from django.http import HttpResponseRedirect
+
+from order.models import *
 from django.shortcuts import render
 from shop.models import *
+from cart.models import *
+def create_password():
+    from random import choices
+    import string
+    password = ''.join(choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=8))
+    return password
 
 
 def index(request):
@@ -43,13 +52,14 @@ def item(request,cat_slug,subcat_slug,item_slug):
             color_for_add = {
                 "color_id": type.color.id,
                 "color_hex": type.color.bg_color,
+                "color_name": type.color.name
             }
             if not color_for_add in colors:
                 colors.append(color_for_add)
 
     for color in colors:
         color["sizes"] = []
-        color["heights"] = []
+
     for type in types:
         stores = ItemAtStore.objects.filter(item_type=type)
         print(stores)
@@ -59,17 +69,23 @@ def item(request,cat_slug,subcat_slug,item_slug):
                     size_to_add = {
                          "size_id": type.size.id,
                         "size_name": type.size.name,
+                        "heights":[]
 
                     }
                     color["sizes"].append(size_to_add)
+
+    for type in types:
+        for color in colors:
+            for size in color['sizes']:
+                if color['color_id'] == type.color.id and size['size_id'] == type.size.id:
                     height_to_add = {
                         "height_id": type.height.id,
                         "height_name": type.height.name,
-                        "type_slug": type.name_slug
 
                     }
-                    color["heights"].append(height_to_add)
-    print(json.dumps(colors))
+                    size['heights'].append(height_to_add)
+
+    print(colors)
     itemInfo = json.dumps(colors)
     return render(request, 'pages/item.html', locals())
 
@@ -82,3 +98,44 @@ def subcategory(request,cat_slug,subcat_slug):
 def category(request,cat_slug):
     subCats = SubCategory.objects.filter(category__name_slug=cat_slug)
     return render(request, 'pages/category.html', locals())
+
+
+def new_order(request):
+    order_code = create_password()
+
+    print(request.POST)
+    if request.user.is_authenticated:
+        order = Order.objects.create(client=request.user, order_code=order_code,
+                                     payment=request.POST.get('pay'),
+                                     delivery=request.POST.get('delivery'),
+                                     comment=request.POST.get('comment'))
+        all_cart_items = Cart.objects.filter(client=request.user)
+    else:
+        s_key = request.session.session_key
+        guest = Guest.objects.get(session=s_key)
+        order = Order.objects.create(guest=guest, order_code=order_code,
+                                     payment=request.POST.get('pay'),
+                                     delivery=request.POST.get('delivery'),
+                                     comment=request.POST.get('comment'))
+
+        all_cart_items = Cart.objects.filter(guest=guest)
+
+    for item in all_cart_items:
+        print(item)
+        ItemsInOrder.objects.create(order=order, item=item.item, number=item.number,
+                                    current_price=item.current_price)
+
+
+    all_cart_items.delete()
+    return HttpResponseRedirect('/order/{}'.format(order.order_code))
+
+def order(request, order_code):
+    try:
+        order = Order.objects.get(order_code=order_code)
+    except:
+        order=None
+
+    if order:
+        return render(request, 'pages/order_complete.html', locals())
+    else:
+        return HttpResponseRedirect('/')
