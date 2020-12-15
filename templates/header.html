@@ -1,0 +1,73 @@
+{% load static %}
+ <header class="header">
+        <div class="header-wrapper">
+            <div class="header-nav">
+                <div class="header-nav__button hide-mob-600">
+                    <a href="{% url 'category' 'man' %}">Мужчинам</a>
+                </div>
+                <div class="header-nav__button hide-mob-600">
+                    <a href="{% url 'category' 'woman' %}">Женщинам</a>
+                </div>
+                <div class="header-nav__button mobile-menu show-mob-600">
+                    <svg width="35" height="7" viewBox="0 0 35 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 6H35" stroke="#519999"/>
+                        <path d="M0 1H35" stroke="#519999"/>
+                    </svg>
+
+                </div>
+            </div>
+            <div class="header-middle">
+                <div class="header-middle__logo">
+                    <a href="/">
+                        <img src="{% static 'images/logo.svg' %}" alt="">
+                    </a>
+                </div>
+                <div class="header-middle__links hide-mob-600">
+                    <div class="header-middle__link">
+                        <a href="{% url 'contacts'%}">Контакты</a>
+                    </div>
+                    <div class="header-middle__link">
+                        <div class="custom-select">
+                            <p class="custom-select__selected">EN</p>
+                            <svg width="6" height="3" viewBox="0 0 6 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 3L0 0H6L3 3Z" fill="#519999"/>
+                            </svg>
+                            <div class="custom-select__values">
+                                <p class="text-center">RU</p>
+                                <p class="text-center">EN</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="header-icons">
+                {% if not request.user.is_authenticated %}
+                <a class="hide-mob-600" href="{% url 'login_page' %}">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.3389 16.1611C19.9774 14.7997 18.3569 13.7918 16.5888 13.1817C18.4825 11.8775 19.7266 9.69473 19.7266 7.22656C19.7266 3.24185 16.4847 0 12.5 0C8.51528 0 5.27344 3.24185 5.27344 7.22656C5.27344 9.69473 6.51753 11.8775 8.41123 13.1817C6.64316 13.7918 5.02266 14.7997 3.66118 16.1611C1.30024 18.5221 0 21.6611 0 25H1.95312C1.95312 19.1844 6.68442 14.4531 12.5 14.4531C18.3156 14.4531 23.0469 19.1844 23.0469 25H25C25 21.6611 23.6998 18.5221 21.3389 16.1611ZM12.5 12.5C9.59224 12.5 7.22656 10.1344 7.22656 7.22656C7.22656 4.31875 9.59224 1.95312 12.5 1.95312C15.4078 1.95312 17.7734 4.31875 17.7734 7.22656C17.7734 10.1344 15.4078 12.5 12.5 12.5Z" fill="#519999"/>
+                    </svg>
+                </a>
+                {% else %}
+                     <a class="hide-mob-600" href="{% url 'lk' %}">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.3389 16.1611C19.9774 14.7997 18.3569 13.7918 16.5888 13.1817C18.4825 11.8775 19.7266 9.69473 19.7266 7.22656C19.7266 3.24185 16.4847 0 12.5 0C8.51528 0 5.27344 3.24185 5.27344 7.22656C5.27344 9.69473 6.51753 11.8775 8.41123 13.1817C6.64316 13.7918 5.02266 14.7997 3.66118 16.1611C1.30024 18.5221 0 21.6611 0 25H1.95312C1.95312 19.1844 6.68442 14.4531 12.5 14.4531C18.3156 14.4531 23.0469 19.1844 23.0469 25H25C25 21.6611 23.6998 18.5221 21.3389 16.1611ZM12.5 12.5C9.59224 12.5 7.22656 10.1344 7.22656 7.22656C7.22656 4.31875 9.59224 1.95312 12.5 1.95312C15.4078 1.95312 17.7734 4.31875 17.7734 7.22656C17.7734 10.1344 15.4078 12.5 12.5 12.5Z" fill="#519999"/>
+                    </svg>
+                </a>
+                {% endif %}
+                <div class="header-icons__cart">
+                    <a href="">
+                        <svg width="21" height="25" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.3828 6.39648V1.54858L13.8342 0H7.16576L5.61719 1.54858V6.39648H0.0507812V22.0703C0.0507812 23.6858 1.36494 25 2.98047 25H18.0195C19.6351 25 20.9492 23.6858 20.9492 22.0703V6.39648H15.3828ZM18.9961 22.0703C18.9961 22.6088 18.558 23.0469 18.0195 23.0469H2.98047C2.44202 23.0469 2.00391 22.6088 2.00391 22.0703V8.34961H5.61719V11.8652H7.57031V2.35767L7.97486 1.95312H13.0251L13.4297 2.35767V6.39648H9.57227V8.34961H13.4297V11.8652H15.3828V8.34961H18.9961V22.0703Z" fill="#519999"/>
+
+                        </svg>
+                    </a>
+                    <p style="display: none" class="header-icons__cart--number">1</p>
+                </div>
+
+            </div>
+        </div>
+    </header>
+

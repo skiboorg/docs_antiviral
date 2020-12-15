@@ -1,0 +1,4 @@
+django-ckeditor
+pillow
+pytils
+django-colorfield

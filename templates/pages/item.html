@@ -1,0 +1,227 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block content %}
+ <div class="container">
+        <p class="back-link"><svg width="27" height="15" viewBox="0 0 27 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M27 7.5H1M1 7.5L7.5 1M1 7.5L7.5 14" stroke="#519999"/>
+        </svg>
+            <a class="link" href="{{request.META.HTTP_REFERER|escape}}">НАЗАД</a>
+        </p>
+    </div>
+
+    <section id="item" class="item">
+        <div class="container">
+            <div class="item-wrapper">
+                <div class="item-images">
+                    {% for image in item.images.all %}
+                    <div class="item-images__item">
+                        <img src="{{ image.image.url }}" alt="">
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-container">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        {% for image in item.images.all %}
+                    <div class="item-images__item">
+                       <div class="swiper-slide">  <img src="{{ image.image.url }}" alt=""></div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+
+
+
+                    <!-- If we need scrollbar -->
+                    <!--                    <div class="swiper-scrollbar"></div>-->
+                </div>
+                <div class="item-info">
+                    <h1 class="section-header">{{ item.name }}</h1>
+                    <p class="item-info__price">{{ item.price }} ₽</p>
+                    <p class="item-info__description">{{ item.short_description }}</p>
+                    <p class="item-info__subtitle">цвет</p>
+                    <div class="item-info__colors">
+{#                        selected#}
+
+
+                        <span @click="selectColor(index)" :class="{'selected':selectedColor===index}" v-for="(color,index) in itemInfo" :style="'background:  ' + color.color_hex  " class="item-info__color "></span>
+
+                    </div>
+                    <div class="item-info__params">
+                        <div class="item-info__param">
+
+                            <p  class="item-info__subtitle">1. размер</p>
+
+                            <div class="custom-select bordered">
+                                <p class="custom-select__selected">[[selectedSizeName]]</p>
+                                <svg width="6" height="3" viewBox="0 0 6 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 3L0 0H6L3 3Z" fill="#519999"/>
+                                </svg>
+                                <div class="custom-select__values">
+                                    <p v-for="size in sizes" @click="selectedSize=size.size_id,selectedSizeName=size.size_name" class="text-center">[[size.size_name]]</p>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="item-info__param">
+
+                            <p class="item-info__subtitle">2. рост</p>
+                              <div class="custom-select bordered">
+                                <p class="custom-select__selected">[[selectedHeightName]]</p>
+                                <svg width="6" height="3" viewBox="0 0 6 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 3L0 0H6L3 3Z" fill="#519999"/>
+                                </svg>
+                                <div class="custom-select__values">
+                                    <p v-for="height in heights" @click="selectedHeight=height.type_slug,selectedHeightName=height.height_name" class="text-center">[[height.height_name]]</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <p class="item-info__table">Таблица размеров</p>
+                    <div class="btn">
+                        <p>В корзину</p>
+                    </div>
+                    <div class="item-info__features">
+                        <div class="item-info__feature">
+                            <div class="item-info__feature--img">
+                                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M50 10.4462C50 4.68636 45.3136 0 39.5538 0C36.673 0 33.9504 1.18637 31.9942 3.23677C30.5241 2.64931 28.9452 2.34299 27.3499 2.34299C24.5853 2.34299 21.965 3.228 19.7723 4.90227C18.0286 6.2336 16.655 8.02345 15.8127 10.0361C10.1681 10.6991 5.77393 15.5121 5.77393 21.3318C5.77393 24.0292 6.73943 26.6327 8.46176 28.6732C7.97806 29.8538 7.72667 31.1234 7.72667 32.4127C7.72667 34.4269 8.33397 36.3014 9.37462 37.8639L0 47.2385L2.76146 50L12.1361 40.6254C13.6986 41.666 15.5731 42.2733 17.5873 42.2733C18.6924 42.2733 19.7933 42.0853 20.8336 41.7233C23.1277 43.7626 26.1078 44.9093 29.2049 44.9093C36.1496 44.9093 41.7992 39.2597 41.7992 32.3154C41.7992 32.1938 41.7973 32.0717 41.7938 31.9496C43.7599 31.1695 45.5151 29.8786 46.8464 28.2124C48.5653 26.0616 49.5117 23.3582 49.5117 20.5997C49.5117 18.9461 49.1741 17.3073 48.5283 15.7967C49.4946 14.185 50 12.3577 50 10.4462ZM29.2049 41.0042C26.7368 41.0042 24.3763 39.9483 22.7283 38.1069L21.7106 36.9698L20.3617 37.6823C19.4996 38.1374 18.5661 38.3682 17.5873 38.3682C14.3032 38.3682 11.6318 35.6968 11.6318 32.4127C11.6318 32.0423 11.6669 31.675 11.734 31.3148C13.4129 32.169 15.3507 32.589 17.5873 32.589V28.6835C15.4743 28.6835 13.8306 28.2051 12.4935 27.1935L12.1342 26.8677C10.574 25.4536 9.67941 23.436 9.67941 21.3318C9.67941 17.2138 13.0299 13.8634 17.1425 13.8634L18.684 13.876L19.0948 12.4527C20.1485 8.79974 23.5432 6.24809 27.3499 6.24809C28.8326 6.24809 30.2937 6.63185 31.5754 7.35779L33.1367 8.24165L34.1492 6.76079C35.3718 4.97246 37.392 3.90511 39.5538 3.90511C43.1606 3.90511 46.0949 6.83937 46.0949 10.4462C46.0949 11.9068 45.6238 13.2881 44.733 14.4409L43.9472 15.4579L44.5709 16.5821C45.2484 17.804 45.6066 19.1933 45.6066 20.5997C45.6066 22.5613 44.9291 24.3828 43.7714 25.8179L43.7378 25.79C42.2398 27.5791 40.0391 28.6053 37.6987 28.6053C35.3054 28.6053 33.0563 27.5467 31.5281 25.7008L28.5198 28.191C30.7926 30.9361 34.1381 32.5104 37.6987 32.5104C37.7632 32.5104 37.8273 32.5089 37.8914 32.5077C37.7888 37.2105 33.9317 41.0042 29.2049 41.0042ZM27.2179 19.8326L24.4564 17.0712C27.8824 13.6452 33.4568 13.6452 36.8824 17.0712L34.1213 19.8326C32.2178 17.9295 29.121 17.9295 27.2179 19.8326Z" fill="#519999"/>
+                                </svg>
+                            </div>
+                            <p>Мягкая ткань</p>
+                        </div>
+                        <div class="item-info__feature">
+                            <div class="item-info__feature--img">
+                                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M50 10.4462C50 4.68636 45.3136 0 39.5538 0C36.673 0 33.9504 1.18637 31.9942 3.23677C30.5241 2.64931 28.9452 2.34299 27.3499 2.34299C24.5853 2.34299 21.965 3.228 19.7723 4.90227C18.0286 6.2336 16.655 8.02345 15.8127 10.0361C10.1681 10.6991 5.77393 15.5121 5.77393 21.3318C5.77393 24.0292 6.73943 26.6327 8.46176 28.6732C7.97806 29.8538 7.72667 31.1234 7.72667 32.4127C7.72667 34.4269 8.33397 36.3014 9.37462 37.8639L0 47.2385L2.76146 50L12.1361 40.6254C13.6986 41.666 15.5731 42.2733 17.5873 42.2733C18.6924 42.2733 19.7933 42.0853 20.8336 41.7233C23.1277 43.7626 26.1078 44.9093 29.2049 44.9093C36.1496 44.9093 41.7992 39.2597 41.7992 32.3154C41.7992 32.1938 41.7973 32.0717 41.7938 31.9496C43.7599 31.1695 45.5151 29.8786 46.8464 28.2124C48.5653 26.0616 49.5117 23.3582 49.5117 20.5997C49.5117 18.9461 49.1741 17.3073 48.5283 15.7967C49.4946 14.185 50 12.3577 50 10.4462ZM29.2049 41.0042C26.7368 41.0042 24.3763 39.9483 22.7283 38.1069L21.7106 36.9698L20.3617 37.6823C19.4996 38.1374 18.5661 38.3682 17.5873 38.3682C14.3032 38.3682 11.6318 35.6968 11.6318 32.4127C11.6318 32.0423 11.6669 31.675 11.734 31.3148C13.4129 32.169 15.3507 32.589 17.5873 32.589V28.6835C15.4743 28.6835 13.8306 28.2051 12.4935 27.1935L12.1342 26.8677C10.574 25.4536 9.67941 23.436 9.67941 21.3318C9.67941 17.2138 13.0299 13.8634 17.1425 13.8634L18.684 13.876L19.0948 12.4527C20.1485 8.79974 23.5432 6.24809 27.3499 6.24809C28.8326 6.24809 30.2937 6.63185 31.5754 7.35779L33.1367 8.24165L34.1492 6.76079C35.3718 4.97246 37.392 3.90511 39.5538 3.90511C43.1606 3.90511 46.0949 6.83937 46.0949 10.4462C46.0949 11.9068 45.6238 13.2881 44.733 14.4409L43.9472 15.4579L44.5709 16.5821C45.2484 17.804 45.6066 19.1933 45.6066 20.5997C45.6066 22.5613 44.9291 24.3828 43.7714 25.8179L43.7378 25.79C42.2398 27.5791 40.0391 28.6053 37.6987 28.6053C35.3054 28.6053 33.0563 27.5467 31.5281 25.7008L28.5198 28.191C30.7926 30.9361 34.1381 32.5104 37.6987 32.5104C37.7632 32.5104 37.8273 32.5089 37.8914 32.5077C37.7888 37.2105 33.9317 41.0042 29.2049 41.0042ZM27.2179 19.8326L24.4564 17.0712C27.8824 13.6452 33.4568 13.6452 36.8824 17.0712L34.1213 19.8326C32.2178 17.9295 29.121 17.9295 27.2179 19.8326Z" fill="#519999"/>
+                                </svg>
+                            </div>
+                            <p>Антибактериальная обработка</p>
+                        </div>
+                        <div class="item-info__feature">
+                            <div class="item-info__feature--img">
+                                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M50 10.4462C50 4.68636 45.3136 0 39.5538 0C36.673 0 33.9504 1.18637 31.9942 3.23677C30.5241 2.64931 28.9452 2.34299 27.3499 2.34299C24.5853 2.34299 21.965 3.228 19.7723 4.90227C18.0286 6.2336 16.655 8.02345 15.8127 10.0361C10.1681 10.6991 5.77393 15.5121 5.77393 21.3318C5.77393 24.0292 6.73943 26.6327 8.46176 28.6732C7.97806 29.8538 7.72667 31.1234 7.72667 32.4127C7.72667 34.4269 8.33397 36.3014 9.37462 37.8639L0 47.2385L2.76146 50L12.1361 40.6254C13.6986 41.666 15.5731 42.2733 17.5873 42.2733C18.6924 42.2733 19.7933 42.0853 20.8336 41.7233C23.1277 43.7626 26.1078 44.9093 29.2049 44.9093C36.1496 44.9093 41.7992 39.2597 41.7992 32.3154C41.7992 32.1938 41.7973 32.0717 41.7938 31.9496C43.7599 31.1695 45.5151 29.8786 46.8464 28.2124C48.5653 26.0616 49.5117 23.3582 49.5117 20.5997C49.5117 18.9461 49.1741 17.3073 48.5283 15.7967C49.4946 14.185 50 12.3577 50 10.4462ZM29.2049 41.0042C26.7368 41.0042 24.3763 39.9483 22.7283 38.1069L21.7106 36.9698L20.3617 37.6823C19.4996 38.1374 18.5661 38.3682 17.5873 38.3682C14.3032 38.3682 11.6318 35.6968 11.6318 32.4127C11.6318 32.0423 11.6669 31.675 11.734 31.3148C13.4129 32.169 15.3507 32.589 17.5873 32.589V28.6835C15.4743 28.6835 13.8306 28.2051 12.4935 27.1935L12.1342 26.8677C10.574 25.4536 9.67941 23.436 9.67941 21.3318C9.67941 17.2138 13.0299 13.8634 17.1425 13.8634L18.684 13.876L19.0948 12.4527C20.1485 8.79974 23.5432 6.24809 27.3499 6.24809C28.8326 6.24809 30.2937 6.63185 31.5754 7.35779L33.1367 8.24165L34.1492 6.76079C35.3718 4.97246 37.392 3.90511 39.5538 3.90511C43.1606 3.90511 46.0949 6.83937 46.0949 10.4462C46.0949 11.9068 45.6238 13.2881 44.733 14.4409L43.9472 15.4579L44.5709 16.5821C45.2484 17.804 45.6066 19.1933 45.6066 20.5997C45.6066 22.5613 44.9291 24.3828 43.7714 25.8179L43.7378 25.79C42.2398 27.5791 40.0391 28.6053 37.6987 28.6053C35.3054 28.6053 33.0563 27.5467 31.5281 25.7008L28.5198 28.191C30.7926 30.9361 34.1381 32.5104 37.6987 32.5104C37.7632 32.5104 37.8273 32.5089 37.8914 32.5077C37.7888 37.2105 33.9317 41.0042 29.2049 41.0042ZM27.2179 19.8326L24.4564 17.0712C27.8824 13.6452 33.4568 13.6452 36.8824 17.0712L34.1213 19.8326C32.2178 17.9295 29.121 17.9295 27.2179 19.8326Z" fill="#519999"/>
+                                </svg>
+                            </div>
+                            <p>Мягкая ткань</p>
+                        </div>
+                    </div>
+
+                    <button class="accordion">Детали</button>
+                    <div class="panel">
+                        {{ item.description | safe }}
+                    </div>
+                    <button class="accordion">Состав и уход</button>
+                    <div class="panel">
+                        {{ item.carry | safe }}
+                    </div>
+                    <button class="accordion">Срок доставки</button>
+                    <div class="panel">
+                        {{ item.delivery | safe }}
+                     </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section class="collection">
+        <div class="container">
+            <h3 class="section-header">
+                ПОХОЖИЕ ТОВАРЫ
+            </h3>
+            <p class="section-header__link"><a href="">Смотреть полностью</a></p>
+            <div class="collection-wrapper">
+                <div class="collection-item">
+                    <p class="collection-item-name">женские рубашки</p>
+                    <div class="collection-item__img" >
+                        <img src="http://placehold.it/350x450" alt="">
+                    </div>
+                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
+                    <p class="collection-item__price">2 500 ₽</p>
+                </div>
+                <div class="collection-item">
+                    <p class="collection-item-name">женские рубашки</p>
+                    <div class="collection-item__img" >
+                        <img src="http://placehold.it/350x450" alt="">
+                    </div>
+                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
+                    <p class="collection-item__price">2 500 ₽</p>
+                </div>
+                <div class="collection-item">
+                    <p class="collection-item-name">женские рубашки</p>
+                    <div class="collection-item__img" >
+                        <img src="http://placehold.it/350x450" alt="">
+                    </div>
+                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
+                    <p class="collection-item__price">2 500 ₽</p>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+    <section class="collection">
+        <div class="container">
+            <h3 class="section-header">
+                КОЛЛЕКЦИЯ PRINTS
+            </h3>
+            <p class="section-header__link"><a href="">Смотреть полностью</a></p>
+            <div class="collection-wrapper">
+                <div class="collection-item">
+                    <p class="collection-item-name">женские рубашки</p>
+                    <div class="collection-item__img" >
+                        <img src="http://placehold.it/350x450" alt="">
+                    </div>
+                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
+                    <p class="collection-item__price">2 500 ₽</p>
+                </div>
+                <div class="collection-item">
+                    <p class="collection-item-name">женские рубашки</p>
+                    <div class="collection-item__img" >
+                        <img src="http://placehold.it/350x450" alt="">
+                    </div>
+                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
+                    <p class="collection-item__price">2 500 ₽</p>
+                </div>
+                <div class="collection-item">
+                    <p class="collection-item-name">женские рубашки</p>
+                    <div class="collection-item__img" >
+                        <img src="http://placehold.it/350x450" alt="">
+                    </div>
+                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
+                    <p class="collection-item__price">2 500 ₽</p>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block js %}
+    <script>
+    app.itemInfo = {{itemInfo | safe}}
+  //console.log(JSON.parse({{itemInfo | safe}}))
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+    </script>
+
+{% endblock %}

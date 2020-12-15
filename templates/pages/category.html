@@ -1,0 +1,41 @@
+
+{% extends 'basic.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container">
+        <p class="back-link"><svg width="27" height="15" viewBox="0 0 27 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M27 7.5H1M1 7.5L7.5 1M1 7.5L7.5 14" stroke="#519999"/>
+        </svg>
+            <a class="link" href="{{request.META.HTTP_REFERER|escape}}">НАЗАД</a>
+        </p>
+    </div>
+    <div class="marquee js-marquee">
+        <div class="marquee-wrapper js-marquee-wrapper" reverse>
+            <p><span>&#10072;</span>ЖЕНСКАЯ МЕДИЦИНСКАЯ ОДЕЖДА</p>
+        </div>
+    </div>
+    <section class="subcategories">
+        <div class="container">
+            <div class="subcategories-wrapper">
+                {% for subcat in subCats %}
+                    <div class="subcategories-item">
+                        <div class="subcategories-item__img">
+                            <a href="{% url 'subcategory' subcat.category.name_slug subcat.name_slug %}">
+                                 <img src="{{ subcat.image.url }}" alt="">
+                            </a>
+
+                        </div>
+                        <p class="subcategories-item__name">{{ subcat.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
+
+
+
+
+
