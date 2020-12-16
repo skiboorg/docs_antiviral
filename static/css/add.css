@@ -1,0 +1,13 @@
+.categories-item{
+    cursor: pointer;
+}
+
+.cart-total__promo{
+    cursor: pointer;
+}
+.cart-total__promo input{
+    padding: 10px;
+    margin-bottom: 0;
+    margin-right: 10px;
+    font-size: 10px
+}

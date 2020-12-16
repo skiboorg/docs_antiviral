@@ -61,9 +61,9 @@ Vue.component('main-cart-item', {
         }
     }
 })
- Vue.component("modal", {
-        template: "#modal-template"
-      });
+Vue.component("modal", {
+    template: "#modal-template"
+});
 
 var app = new Vue({
     delimiters: ['[[', ']]'],
@@ -83,8 +83,12 @@ var app = new Vue({
         heights:null,
         coords: [54.82896654088406, 39.831893822753904],
         cartTotal:0,
+        cartTotalwPromo:0,
         cartItemsNum:0,
         cartNotEmpty : false,
+        promo_percent:0,
+        promo_rub:0,
+        promo:null,
         sidePanelActive:false,
         mobileCatalogActive:false,
         headerCartShow:false,
@@ -99,7 +103,7 @@ var app = new Vue({
 
     methods:{
         selectColor(index){
-          console.log(index)
+            console.log(index)
             this.selectedColor = this.itemInfo[index].color_id
             this.sizes = this.itemInfo[index].sizes
             this.heights = this.itemInfo[index].heights
@@ -110,6 +114,40 @@ var app = new Vue({
             console.log('this.sizes',this.sizes)
 
 
+        },
+        applyPromo(){
+            if (!this.promo){
+                this.errorToast('Введите промокод')
+                return
+            }
+            let body={
+                promo:this.promo
+            }
+            let csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
+            fetch(`/user/apply_promo/`, {
+                method: 'post',
+                body: JSON.stringify(body),
+                headers: { "X-CSRFToken": csrfmiddlewaretoken },
+                credentials: 'same-origin'
+            }).then(res=>res.json())
+                .then(res => {
+                    console.log(res)
+                    if (res['status'] === true){
+                        console.log(res)
+                        Toastify({
+                            duration: 1000,
+                            close: true,
+                            text: `Промокод применен`,
+                            backgroundColor: "linear-gradient(to right, #aac1c1, #519999)",
+                            className: "info",
+                        }).showToast();
+                        window.location.reload()
+                    }else {
+                        this.errorToast('Промокод не найден')
+                    }
+
+
+                })
         },
         selectSize(s_name,s_id,heights){
             console.log(heights)
@@ -123,8 +161,8 @@ var app = new Vue({
             let item_id =this.headerCartItems[index]['id'],
                 btn = document.getElementById(`add_btn_${item_id}`)
             try {
-              btn.removeAttribute('disabled')
-            btn.innerText = 'В корзину'
+                btn.removeAttribute('disabled')
+                btn.innerText = 'В корзину'
             }
             catch (e) {
 
@@ -152,7 +190,7 @@ var app = new Vue({
         },
         add_qt: function (index) {
             this.headerCartItems[index]['num'] += 1
-           this.updateCart(this.headerCartItems[index]['id'],this.headerCartItems[index]['num'])
+            this.updateCart(this.headerCartItems[index]['id'],this.headerCartItems[index]['num'])
         },
         updateCart: function (item_id,num) {
             console.log('update',item_id,num)
@@ -167,9 +205,9 @@ var app = new Vue({
             let csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value,
                 overlay = document.getElementById('cart_overlay'),
                 body = {item_id:item_id,
-                        action:action,
-                        number:num}
-                if (overlay){overlay.classList.add('cart-overlay-active')}
+                    action:action,
+                    number:num}
+            if (overlay){overlay.classList.add('cart-overlay-active')}
 
             fetch(`/cart/add_to_cart/`, {
                 method: 'post',
@@ -179,10 +217,10 @@ var app = new Vue({
             }).then(res=>res.json())
                 .then(res => {
                     if (res['result'] === true){
-                       console.log(res)
+                        console.log(res)
 
                     }
-                   if (overlay){overlay.classList.remove('cart-overlay-active')}
+                    if (overlay){overlay.classList.remove('cart-overlay-active')}
 
                 })
         },
@@ -200,11 +238,11 @@ var app = new Vue({
                 this.errorToast('Выберите цвет')
                 return
             }
-             if (!this.selectedSize){
+            if (!this.selectedSize){
                 this.errorToast('Выберите размер')
                 return
             }
-             if (!this.selectedHeight){
+            if (!this.selectedHeight){
                 this.errorToast('Выберите рост')
                 return
             }
@@ -218,10 +256,10 @@ var app = new Vue({
             // })
             let csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
             let data = {
-                 item_id: id,
-                    color:this.selectedColor,
-                    size:this.selectedSize,
-                    height:this.selectedHeight,
+                item_id: id,
+                color:this.selectedColor,
+                size:this.selectedSize,
+                height:this.selectedHeight,
                 action:'add_new'
             }
             fetch(`/cart/add_to_cart/`, {
@@ -233,7 +271,7 @@ var app = new Vue({
             }).then(res=>res.json())
                 .then(res => {
                     if (res['result'] === true){
-                       console.log(res)
+                        console.log(res)
                         getCart()
                     }
 
@@ -264,8 +302,8 @@ var app = new Vue({
             }).then(res=>res.json())
                 .then(res => {
 
-                      console.log(res)
-                       event.target.classList.toggle('item-in-fav')
+                    console.log(res)
+                    event.target.classList.toggle('item-in-fav')
                     if (res['result']==='deleted'){text='Товар удален из избранного'}
                     if (res['result']==='added'){text='Товар добавлен в избранное'}
 
@@ -282,6 +320,8 @@ var app = new Vue({
     watch: {
         headerCartItems: function (val) {
             console.log('change')
+            console.log('promo_percent',this.promo_percent)
+            console.log('promo_rub',this.promo_rub)
             this.cartTotal = 0
             let x = 0
 
@@ -289,6 +329,13 @@ var app = new Vue({
                 console.log(val[item]['price'])
                 this.cartTotal +=  parseInt(val[item]['price']) * parseInt(val[item]['num'])
                 x+=1
+            }
+
+            if (parseInt(this.promo_percent)>0){
+                this.cartTotalwPromo = this.cartTotal - (this.cartTotal * parseInt(this.promo_percent) / 100)
+            }
+            if (parseInt(this.promo_rub)>0){
+                this.cartTotalwPromo = this.cartTotal - parseInt(this.promo_rub)
             }
 
             this.cartItemsNum = x

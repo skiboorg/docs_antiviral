@@ -134,73 +134,27 @@
             <h3 class="section-header">
                 ПОХОЖИЕ ТОВАРЫ
             </h3>
-            <p class="section-header__link"><a href="">Смотреть полностью</a></p>
+{#            <p class="section-header__link"><a href="">Смотреть полностью</a></p>#}
             <div class="collection-wrapper">
-                <div class="collection-item">
-                    <p class="collection-item-name">женские рубашки</p>
+                {% for collection_item in item.collection.items.all %}
+                  <div style="margin-bottom: 20px" class="collection-item">
+                    <p class="collection-item-name">{{ item.collection.subcategory.name}}</p>
                     <div class="collection-item__img" >
-                        <img src="http://placehold.it/350x450" alt="">
+                        <a href="{% url 'item' collection_item.collection.subcategory.category.name_slug collection_item.collection.subcategory.name_slug collection_item.name_slug %}">
+                           <img src="{{  collection_item.images.first.image.url }}" alt="">
+                        </a>
+
                     </div>
-                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
-                    <p class="collection-item__price">2 500 ₽</p>
+                    <p class="collection-item__name">{{ collection_item.name }}</p>
+                    <p class="collection-item__price">{{ collection_item.price }} ₽</p>
                 </div>
-                <div class="collection-item">
-                    <p class="collection-item-name">женские рубашки</p>
-                    <div class="collection-item__img" >
-                        <img src="http://placehold.it/350x450" alt="">
-                    </div>
-                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
-                    <p class="collection-item__price">2 500 ₽</p>
-                </div>
-                <div class="collection-item">
-                    <p class="collection-item-name">женские рубашки</p>
-                    <div class="collection-item__img" >
-                        <img src="http://placehold.it/350x450" alt="">
-                    </div>
-                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
-                    <p class="collection-item__price">2 500 ₽</p>
-                </div>
+                {% endfor %}
 
 
             </div>
         </div>
     </section>
-    <section class="collection">
-        <div class="container">
-            <h3 class="section-header">
-                КОЛЛЕКЦИЯ PRINTS
-            </h3>
-            <p class="section-header__link"><a href="">Смотреть полностью</a></p>
-            <div class="collection-wrapper">
-                <div class="collection-item">
-                    <p class="collection-item-name">женские рубашки</p>
-                    <div class="collection-item__img" >
-                        <img src="http://placehold.it/350x450" alt="">
-                    </div>
-                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
-                    <p class="collection-item__price">2 500 ₽</p>
-                </div>
-                <div class="collection-item">
-                    <p class="collection-item-name">женские рубашки</p>
-                    <div class="collection-item__img" >
-                        <img src="http://placehold.it/350x450" alt="">
-                    </div>
-                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
-                    <p class="collection-item__price">2 500 ₽</p>
-                </div>
-                <div class="collection-item">
-                    <p class="collection-item-name">женские рубашки</p>
-                    <div class="collection-item__img" >
-                        <img src="http://placehold.it/350x450" alt="">
-                    </div>
-                    <p class="collection-item__name">Синяя рубашка с принтом «зайцы»</p>
-                    <p class="collection-item__price">2 500 ₽</p>
-                </div>
 
-
-            </div>
-        </div>
-    </section>
 
 {% endblock %}
 {% block js %}

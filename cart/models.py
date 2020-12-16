@@ -3,6 +3,7 @@ from customuser.models import User, Guest
 from shop.models import ItemType
 
 class Cart(models.Model):
+
     client = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.CASCADE,
                                verbose_name='Корзина клиента')
     guest = models.ForeignKey(Guest, blank=True, null=True, default=None, on_delete=models.CASCADE,

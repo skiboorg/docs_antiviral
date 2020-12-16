@@ -694,7 +694,6 @@ button:focus {
   position: relative;
   height: 580px;
   background-size: cover !important;
-  cursor: pointer;
 }
 
 .categories-item.item1 {
@@ -729,22 +728,16 @@ button:focus {
 }
 
 .collection-wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
 }
 
 .collection-item {
   position: relative;
   padding-left: 20px;
+  text-align: center;
+  cursor: pointer;
 }
 
 .collection-item-name {
@@ -765,6 +758,13 @@ button:focus {
 
 .collection-item__img {
   margin-bottom: 15px;
+}
+
+.collection-item__img img {
+  width: 350px;
+  height: 450px;
+  -o-object-fit: cover;
+  object-fit: cover;
 }
 
 .collection-item__name {
@@ -1472,7 +1472,6 @@ button:focus {
 }
 
 .cart-right {
-
   margin-bottom: 50px;
 }
 
@@ -2410,10 +2409,7 @@ button:focus {
   }
 
   .collection-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     grid-row-gap: 20px;
-    grid-column-gap: 10px;
   }
 
   .collection-item-name {

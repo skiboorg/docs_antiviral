@@ -86,8 +86,19 @@
                 <div style="position: sticky;top: 20px"  class="cart-total">
                     <p class="cart-total__info">Доставка <span class="color-green">[[deliveryPrice]] ₽ </span></p>
                     <p class="cart-total__info">сумма заказа <span class="color-green">[[cartTotal]] ₽ </span></p>
-                    <p class="cart-total__summ">итого <span class="color-green">[[cartTotal + deliveryPrice]] ₽</span> </p>
-                    <p class="cart-total__promo">Промокод (если есть) <span class="color-green">АКТИВИРОВАТЬ</span></p>
+                    <p v-if="parseInt(this.promo_rub)>0" class="cart-total__info">Промо код <span class="color-green">-[[promo_rub]] ₽ </span></p>
+                    <p v-if="parseInt(this.promo_percent)>0" class="cart-total__info">Промо код <span class="color-green">-[[promo_percent]] % </span></p>
+                    <p v-if="cartTotalwPromo===0" class="cart-total__summ">итого <span class="color-green">[[cartTotal + deliveryPrice]] ₽</span> </p>
+                    <p v-else class="cart-total__summ">итого <span class="color-green">[[cartTotalwPromo + deliveryPrice]] ₽</span> </p>
+
+
+
+                       <p v-if="cartTotalwPromo===0" class="cart-total__promo ">
+                           <input v-model="promo"  type="text" placeholder="Промокод (если есть)">
+                           <span @click="applyPromo" class="color-green">АКТИВИРОВАТЬ</span>
+                       </p>
+
+
                     <button type="submit" class="btn">оформить заказ</button>
                     <p class="cart-total__text">Нажимая на кнопку «оплатить заказ», я принимаю условия <a href="">публичной оферты</a> и <a
                             href="">политики конфиденциальности</a></p>

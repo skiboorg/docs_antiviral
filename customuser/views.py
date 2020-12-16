@@ -1,12 +1,14 @@
+import json
+
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from customuser.models import User
+from customuser.models import *
 from django.http import JsonResponse, HttpResponseRedirect
 from .forms import SignUpForm, UpdateForm
 # from order.models import Wishlist,Order
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-
+from shop.models import PromoCode
 def create_password():
     from random import choices
     import string
@@ -137,3 +139,23 @@ def signup(request):
             print(form.errors)
             return render(request, 'pages/register.html', locals())
 
+def apply_promo(request):
+    body = json.loads(request.body)
+    promo = None
+    try:
+        promo = PromoCode.objects.get(code=body.get('promo'))
+        print(promo)
+    except:
+        pass
+    if promo:
+        if request.user.is_authenticated:
+            request.user.promo_code = promo
+            request.user.save()
+        else:
+            s_key = request.session.session_key
+            guest = Guest.objects.get(session=s_key)
+            guest.promo_code = promo
+            guest.save()
+        return JsonResponse({'status': True}, safe=True)
+    else:
+        return JsonResponse({'status': False}, safe=True)

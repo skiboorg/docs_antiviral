@@ -20,6 +20,7 @@ class ItemTypeAdmin(admin.ModelAdmin):
 
 admin.site.register(ItemImage)
 admin.site.register(Store)
+admin.site.register(PromoCode)
 admin.site.register(ItemAtStore)
 admin.site.register(Item,ItemAdmin)
 admin.site.register(Collection)

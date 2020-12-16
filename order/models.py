@@ -40,8 +40,8 @@ class Order(models.Model):
                                verbose_name='Заказ клиента')
     guest = models.ForeignKey(Guest, blank=True, null=True, default=None, on_delete=models.CASCADE,
                               verbose_name='Заказ гостя')
-    # promo_code = models.ForeignKey(PromoCode, blank=True, null=True, default=None, on_delete=models.SET_NULL,
-    #                           verbose_name='Использованный промо-код')
+    promo_code = models.ForeignKey(PromoCode, blank=True, null=True, default=None, on_delete=models.SET_NULL,
+                               verbose_name='Использованный промо-код')
     # status = models.ForeignKey(OrderStatus, blank=True, null=True, default=None, on_delete=models.SET_NULL,
     #                           verbose_name='Статус заказа')
     # payment = models.ForeignKey(OrderPayment, blank=True, null=True, default=None, on_delete=models.SET_NULL,
@@ -52,8 +52,8 @@ class Order(models.Model):
     delivery = models.CharField(max_length=50, blank=True, null=True)
     comment = models.TextField(blank=True, null=True)
     total_price = models.IntegerField('Общая стоимость заказа', default=0)
-    total_price_with_code = models.DecimalField('Общая стоимость заказа с учетом промо-кода', decimal_places=2,
-                                                max_digits=10, default=0)
+    # total_price_with_code = models.DecimalField('Общая стоимость заказа с учетом промо-кода', decimal_places=2,
+    #                                             max_digits=10, default=0)
     track_code = models.CharField('Трек код', max_length=50, blank=True, null=True)
     order_code = models.CharField('Код заказа', max_length=10, blank=True, null=True)
     is_complete = models.BooleanField('Заказ выполнен ?', default=False)

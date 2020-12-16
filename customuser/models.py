@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-
+from shop.models import PromoCode
 
 
 class UserManager(BaseUserManager):
@@ -52,7 +52,8 @@ class User(AbstractUser):
     size = models.CharField('Размер', max_length=50, blank=True, null=True)
     height = models.CharField('Рост', max_length=50, blank=True, null=True)
     profile_ok = models.BooleanField(default=False)
-
+    promo_code = models.ForeignKey(PromoCode, blank=True, null=True, on_delete=models.SET_NULL,
+                                   verbose_name='Промо код')
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -63,7 +64,8 @@ class Guest(models.Model):
     email = models.EmailField('Эл. почта', blank=True, null=True)
     fio = models.CharField('ФИО', max_length=50, blank=True, null=True)
     phone = models.CharField('Телефон', max_length=50, blank=True, null=True)
-
+    promo_code = models.ForeignKey(PromoCode, blank=True, null=True, on_delete=models.SET_NULL,
+                                   verbose_name='Промо код')
 
     def __str__(self):
         return 'Гостевой аккаунт. EMAIL : %s' % self.email

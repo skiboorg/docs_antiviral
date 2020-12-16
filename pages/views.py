@@ -41,6 +41,7 @@ def partner(request):
 
 def item(request,cat_slug,subcat_slug,item_slug):
     item = Item.objects.get(name_slug=item_slug)
+
     info = []
     colors=[]
     sizes=[]
@@ -91,11 +92,18 @@ def item(request,cat_slug,subcat_slug,item_slug):
 
 
 def subcategory(request,cat_slug,subcat_slug):
-
+    if cat_slug == 'man':
+        slider_text ='Мужская медицинская одежда'
+    else:
+        slider_text = 'Женская медицинская одежда'
     collections = Collection.objects.filter(subcategory__name_slug=subcat_slug)
     print(collections)
     return render(request, 'pages/subcategory.html', locals())
 def category(request,cat_slug):
+    if cat_slug == 'man':
+        slider_text ='Мужская медицинская одежда'
+    else:
+        slider_text = 'Женская медицинская одежда'
     subCats = SubCategory.objects.filter(category__name_slug=cat_slug)
     return render(request, 'pages/category.html', locals())
 
@@ -108,16 +116,22 @@ def new_order(request):
         order = Order.objects.create(client=request.user, order_code=order_code,
                                      payment=request.POST.get('pay'),
                                      delivery=request.POST.get('delivery'),
-                                     comment=request.POST.get('comment'))
+                                     comment=request.POST.get('comment'),
+                                     promo_code=request.user.promo_code
+                                     )
         all_cart_items = Cart.objects.filter(client=request.user)
+        request.user.promo_code = None
+        request.user.save()
     else:
         s_key = request.session.session_key
         guest = Guest.objects.get(session=s_key)
         order = Order.objects.create(guest=guest, order_code=order_code,
                                      payment=request.POST.get('pay'),
                                      delivery=request.POST.get('delivery'),
-                                     comment=request.POST.get('comment'))
-
+                                     comment=request.POST.get('comment'),
+                                     promo_code=guest.promo_code)
+        guest.promo_code = None
+        guest.save()
         all_cart_items = Cart.objects.filter(guest=guest)
 
     for item in all_cart_items:

@@ -26,6 +26,7 @@ urlpatterns = [
    path('signup/', views.signup, name='signup'),
    path('restore/', views.restore, name='restore'),
    path('lk/', views.account, name='lk'),
+   path('apply_promo/', views.apply_promo, name='apply_promo'),
    path('account/edit', views.account_edit, name='account_edit'),
    path('account/wishlist', views.wishlist, name='wishlist'),
    path('account/orders', views.orders, name='orders'),

@@ -241,3 +241,15 @@ class ItemAtStore(models.Model):
     class Meta:
         verbose_name = "Товар на складе"
         verbose_name_plural = "Товары на складах"
+
+
+class PromoCode(models.Model):
+    code = models.CharField('ПромоКод', max_length=255, blank=False, null=True)
+    discount = models.IntegerField('Скидка % по коду',default=0)
+    summ = models.IntegerField('Скидка в рублях по коду',default=0)
+
+    def __str__(self):
+        return f'Промо код {self.code} | Скидка {self.discount}% | Скидка {self.summ}руб'
+    class Meta:
+        verbose_name = "Промо код"
+        verbose_name_plural = "Промо коды"
