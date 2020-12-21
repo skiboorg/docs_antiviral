@@ -318,6 +318,10 @@ var app = new Vue({
         },
     },
     watch: {
+        itemInfo: function (val){
+            console.log('iteminfo change')
+            this.selectColor(0)
+        },
         headerCartItems: function (val) {
             console.log('change')
             console.log('promo_percent',this.promo_percent)

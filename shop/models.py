@@ -123,6 +123,7 @@ class Item(models.Model):
     name_lower = models.CharField(max_length=255, blank=True, null=True,default='',editable=False)
     name_slug = models.CharField(max_length=255, blank=True, null=True,db_index=True,editable=False)
     price = models.IntegerField('Цена', blank=True, default=0, db_index=True)
+    old_price = models.IntegerField('Цена без скидки', blank=True, default=0, db_index=True)
     article = models.CharField('Артикул', max_length=50, blank=True, null=True)
     discount = models.IntegerField('Скидка', default=0)
     short_description = models.CharField('Короткое описание', max_length=50, blank=True, null=True)
@@ -152,6 +153,13 @@ class Item(models.Model):
     image_tag.short_description = 'Основная картинка'
 
     def save(self, *args, **kwargs):
+        if self.discount > 0:
+            self.old_price = self.price
+            self.price = self.price - (self.price * self.discount / 100)
+        else:
+            self.price = self.old_price
+            self.old_price = 0
+
         slug = slugify(self.name)
         if not self.name_slug:
             testSlug = Item.objects.filter(name_slug=slug)

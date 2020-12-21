@@ -39,7 +39,15 @@
                 </div>
                 <div class="item-info">
                     <h1 class="section-header">{{ item.name }}</h1>
+                    {% if item.discount > 0 %}
+                        <div class="item-price-w-discount">
+                              <p class="item-info__price old-price">{{ item.old_price }} ₽</p>
                     <p class="item-info__price">{{ item.price }} ₽</p>
+                        </div>
+
+                    {% else %}
+                    <p class="item-info__price">{{ item.price }} ₽</p>
+                    {% endif %}
                     <p class="item-info__description">{{ item.short_description }}</p>
                     <p class="item-info__subtitle">цвет</p>
                     <div class="item-info__colors">

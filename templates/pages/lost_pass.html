@@ -1,0 +1,21 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block content %}
+      <div class="container">
+        <div class="login-form">
+            <h1 class="login-form__title">Восстановление пароля</h1>
+            <form class="mb-15" action="{% url 'newpass' %}" method="post">{% csrf_token %}
+
+                <input type="email" required name="email" placeholder="Введите почту">
+
+                <button type="submit" class="btn">Сброс пароля</button>
+            </form>
+            {% if pass_sent %}
+            <p style="text-align: center;font-weight: bold;color: green">Новый пароль отправлен на почту</p>
+            {% endif %}
+
+
+
+        </div>
+    </div>
+{% endblock %}

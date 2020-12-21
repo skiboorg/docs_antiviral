@@ -9,14 +9,31 @@ from .forms import SignUpForm, UpdateForm
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from shop.models import PromoCode
+from order.models import Order
 def create_password():
     from random import choices
     import string
     password = ''.join(choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=8))
     return password
 
+def newpass(request):
+    pass_sent=False
+    if request.POST:
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+            print(user)
+            pass_sent = True
+        except:
+            return HttpResponseRedirect('/')
+
+    return render(request, 'pages/lost_pass.html', locals())
+
+
 def account(request):
     if request.user.is_authenticated:
+        orders= Order.objects.filter(client=request.user)
+
         return render(request, 'pages/lk.html', locals())
     else:
         return HttpResponseRedirect('/')

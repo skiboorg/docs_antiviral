@@ -11,3 +11,13 @@
     margin-right: 10px;
     font-size: 10px
 }
+.item-price-w-discount{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.item-info__price.old-price{
+    margin-right: 20px;
+    color: #919A9C;
+    text-decoration: line-through;
+}

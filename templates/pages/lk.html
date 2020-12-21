@@ -93,8 +93,6 @@
                         </defs>
                     </svg>
                 </div>
-
-
             </div>
             <div v-if="tabActive==='profileTab'" class="lk-tab">
                 <h1 class="lk-tab__title b-bottom">Мой профиль</h1>
@@ -102,12 +100,8 @@
                 <div class="lk-tab-grid b-bottom">
                     <div class="lk-tab-grid__item">
                         <p  class="lk-tab-grid__item--title"> Как вас зовут?</p>
-
                             <input type="text" placeholder="Телефон" name="phone" value="{% if  request.user.phone %}{{ request.user.phone }}{% endif %}">
                             <input type="text" placeholder="ФИО" name="fio" value="{% if  request.user.fio %}{{ request.user.fio }}{% endif %}">
-
-
-
                     </div>
                     <div class="lk-tab-grid__item">
                         <p  class="lk-tab-grid__item--title">Способ оплаты</p>
@@ -117,7 +111,6 @@
                                     <path d="M1 14L14 1" stroke="#E0E0E0"/>
                                     <path d="M14 14L1 1" stroke="#E0E0E0"/>
                                 </svg>
-
                             </div>
                             <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="18" height="12" rx="2" />
@@ -142,7 +135,6 @@
                             <p>Карта **0000</p>
                         </div>
                         <a href="" class="link">+ ДОБАВИТЬ</a>
-
                     </div>
                     <div class="lk-tab-grid__item">
                         <p  class="lk-tab-grid__item--title">Адрес доставки</p>
@@ -229,22 +221,29 @@
             </div><!--TabProfile-->
             <div v-if="tabActive==='orderTab'" class="lk-tab">
                 <h1 class="lk-tab__title ">Мои заказы</h1>
-                <div class="lk-order-item">
+
+                {% for order in orders %}
+                    <p>{{ order.order_code }}</p>
+                    {% for item in order.itemsinorder_set.all %}
+
+                    <div class="lk-order-item">
                     <div class="lk-order-item__img">
-                        <img src="http://placehold.it/300" alt="">
+                        <img src="{{ item.item.item.images.first.image.url }}" alt="">
                     </div>
 
                     <div class="lk-order-item__info">
-                        <p class="lk-order-item__info--status">Доставлен</p>
-                        <p class="lk-order-item__info--name">Рубашка «ионеску» серая с принтом «зубная фея»</p>
+                        <p class="lk-order-item__info--status">{% if order.is_complete %}Доставлен{% endif %}</p>
+                        <p class="lk-order-item__info--status">{% if order.is_payed %}Оплачен{% endif %}</p>
+
+                        <p class="lk-order-item__info--name">{{ item.item.item.name }}</p>
                         <div class="lk-order-item__info--group">
                             <div class="lk-order-item__info--group--item">
                                 <p class="item-info__subtitle">Дата заказа</p>
-                                <p class="fs12">18 октября 2020</p>
+                                <p class="fs12">{{ order.created_at | date }}</p>
                             </div>
                             <div class="lk-order-item__info--group--item">
-                                <p class="item-info__subtitle">Способ оплаты</p>
-                                <p class="fs12">Mastercard **0051</p>
+                                <p class="item-info__subtitle">Номер заказа</p>
+                                <p class="fs12">{{ order.order_code }}</p>
                             </div>
                             <div class="lk-order-item__info--group--item">
                                 <p class="item-info__subtitle">Адрес доставки</p>
@@ -252,35 +251,12 @@
                             </div>
                         </div>
                     </div>
-                    <p class="lk-order-item__num">2 шт</p>
-                    <p class="lk-order-item__price">2500 ₽</p>
+                    <p class="lk-order-item__num">{{ item.number }} шт</p>
+                    <p class="lk-order-item__price">{{ item.total_price }}₽</p>
                 </div>
-                <div class="lk-order-item">
-                    <div class="lk-order-item__img">
-                        <img src="http://placehold.it/300" alt="">
-                    </div>
 
-                    <div class="lk-order-item__info">
-                        <p class="lk-order-item__info--status">Доставлен</p>
-                        <p class="lk-order-item__info--name">Рубашка «ионеску» серая с принтом «зубная фея»</p>
-                        <div class="lk-order-item__info--group">
-                            <div class="lk-order-item__info--group--item">
-                                <p class="item-info__subtitle">Дата заказа</p>
-                                <p class="fs12">18 октября 2020</p>
-                            </div>
-                            <div class="lk-order-item__info--group--item">
-                                <p class="item-info__subtitle">Способ оплаты</p>
-                                <p class="fs12">Mastercard **0051</p>
-                            </div>
-                            <div class="lk-order-item__info--group--item">
-                                <p class="item-info__subtitle">Адрес доставки</p>
-                                <p class="fs12">г. Уфа, ул. Казанская 4, 14</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="lk-order-item__num">2 шт</p>
-                    <p class="lk-order-item__price">2500 ₽</p>
-                </div>
+                    {% endfor %}
+                {% endfor %}
             </div>
             <div v-if="tabActive==='promoTab'" class="lk-tab">
                 <h1 class="lk-tab__title ">Промокоды</h1>
