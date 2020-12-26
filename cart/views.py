@@ -19,10 +19,10 @@ def get_all_items(client=None,guest=None):
     all_cart_items = []
     if client:
         all_cart_items = Cart.objects.filter(client=client)
-        print('Cart class : client cart items : ', all_cart_items)
+
     if guest:
         all_cart_items = Cart.objects.filter(guest=guest)
-        print('Cart class : guest cart items : ', all_cart_items)
+
     if all_cart_items.exists():
         allitems = []
         for cartitem in all_cart_items:
@@ -64,12 +64,12 @@ def wishlist_add(request):
 def add_to_cart1(request):
     return_dict = {}
     data = request.POST
-    print(data)
+
     s_key = request.session.session_key
     item_id = int(data.get('item_id'))
     item_number = int(data.get('item_number'))
     if request.user.is_authenticated:
-        print('User is_authenticated')
+
         addtocart, created = Cart.objects.get_or_create(client=request.user,
                                                         item_id=item_id, defaults={'number': item_number})
         if not created:
@@ -78,10 +78,10 @@ def add_to_cart1(request):
         all_items_in_cart = Cart.objects.filter(client=request.user)
 
     else:
-        print('User is_not authenticated')
+
         try:
             guest = Guest.objects.get(session=s_key)
-            print('Guest already created')
+
         except:
             guest = None
 
@@ -161,7 +161,7 @@ def update_cart(request):
     return_dict = {}
 
     data = request.POST
-    print(data)
+
     item_id = int(data.get('item_id'))
     item_number = int(data.get('item_number'))
 
@@ -226,7 +226,7 @@ def delete_from_main_cart(request):
     return_dict = {}
 
     data = request.POST
-    print(data)
+
     item_id = int(data.get('item_id'))
 
     Cart.objects.get(id=item_id).delete()
@@ -298,7 +298,7 @@ def delete_from_main_cart(request):
 def use_promo(request):
     return_dict = {}
     data = request.POST
-    print(data)
+
     promo_code = data.get('promo_code')
     try:
         code = PromoCode.objects.get(promo_code=promo_code)
@@ -378,7 +378,7 @@ def use_promo(request):
 def sort_filter(request):
     return_dict = {}
     data = request.GET
-    print(data)
+
     search = data.get('search')
     filter = data.get('filter')
     order = data.get('order')
@@ -393,15 +393,15 @@ def sort_filter(request):
     if search:
         search_qs = all_items.filter(name__contains=search)
         items = search_qs
-        print(items)
+
     if filter:
         print('Поиск по фильтру')
         if search_qs:
             items = search_qs.filter(filter__name_slug=filter)
-            print(items)
+
         else:
             items = all_items.filter(filter__name_slug=filter)
-            print(items)
+
 
     return_dict['all_items'] = list()
     for item in items:
@@ -422,7 +422,7 @@ def sort_filter(request):
 def add_to_cart(request):
     body = json.loads(request.body)
     return_dict = {}
-    print(body)
+
     item_id = int(body.get('item_id'))
     color = body.get('color')
     size = body.get('size')
@@ -453,7 +453,7 @@ def add_to_cart(request):
         if user:
             try:
                 item = Cart.objects.get(client=user, item=item_type)
-                print('item found',item)
+
                 item.number+=1
                 item.save()
             except:
@@ -513,7 +513,7 @@ def get_cart(request):
 def add_to_fav(request):
     body = json.loads(request.body)
     return_dict = {}
-    print(body)
+
     item_id = int(body.get('item_id'))
     try:
          Wishlist.objects.get(item_id=item_id).delete()

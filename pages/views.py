@@ -63,7 +63,7 @@ def item(request,cat_slug,subcat_slug,item_slug):
 
     for type in types:
         stores = ItemAtStore.objects.filter(item_type=type)
-        print(stores)
+
         if stores:
             for color in colors:
                 if color["color_id"] == type.color.id:
@@ -86,7 +86,7 @@ def item(request,cat_slug,subcat_slug,item_slug):
                     }
                     size['heights'].append(height_to_add)
 
-    print(colors)
+
     itemInfo = json.dumps(colors)
     return render(request, 'pages/item.html', locals())
 
@@ -97,7 +97,7 @@ def subcategory(request,cat_slug,subcat_slug):
     else:
         slider_text = 'Женская медицинская одежда'
     collections = Collection.objects.filter(subcategory__name_slug=subcat_slug)
-    print(collections)
+
     return render(request, 'pages/subcategory.html', locals())
 def category(request,cat_slug):
     if cat_slug == 'man':
@@ -111,7 +111,7 @@ def category(request,cat_slug):
 def new_order(request):
     order_code = create_password()
 
-    print(request.POST)
+
     if request.user.is_authenticated:
         order = Order.objects.create(client=request.user, order_code=order_code,
                                      payment=request.POST.get('pay'),
@@ -135,7 +135,7 @@ def new_order(request):
         all_cart_items = Cart.objects.filter(guest=guest)
 
     for item in all_cart_items:
-        print(item)
+
         ItemsInOrder.objects.create(order=order, item=item.item, number=item.number,
                                     current_price=item.current_price)
 
