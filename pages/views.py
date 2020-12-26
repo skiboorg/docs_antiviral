@@ -153,3 +153,30 @@ def order(request, order_code):
         return render(request, 'pages/order_complete.html', locals())
     else:
         return HttpResponseRedirect('/')
+
+def storage(request):
+    if request.user.is_superuser:
+        if request.GET.get('sort'):
+            all_items = ItemType.objects.all().order_by(f'-{request.GET.get("sort")}')
+        else:
+            all_items = ItemType.objects.all()
+        all_storage = Store.objects.all()
+        return render(request, 'pages/storage.html', locals())
+
+def add_item(request):
+    if request.user.is_superuser:
+        storage = request.GET.get('storage')
+        item = request.GET.get('item')
+        item = ItemAtStore.objects.get(item_type_id=item,store_id=storage)
+        item.item_number+=1
+        item.save()
+        return HttpResponseRedirect('/storage/')
+def del_item(request):
+    if request.user.is_superuser:
+        storage = request.GET.get('storage')
+        item = request.GET.get('item')
+        item = ItemAtStore.objects.get(item_type_id=item, store_id=storage)
+        if item.item_number > 0:
+            item.item_number -= 1
+            item.save()
+        return HttpResponseRedirect('/storage/')

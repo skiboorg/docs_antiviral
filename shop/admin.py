@@ -12,9 +12,10 @@ class ItemAdmin(admin.ModelAdmin):
     class Meta:
         model = Item
 
-class ItemTypeAdmin(admin.ModelAdmin):
 
-    list_filter = ("item",)
+class ItemTypeAdmin(admin.ModelAdmin):
+    list_display = ['article_tag','name_tag','color_tag','size_tag']
+    list_filter = ('item','color','size')
     class Meta:
         model = ItemType
 

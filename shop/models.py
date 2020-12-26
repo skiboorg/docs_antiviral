@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.db.models.signals import post_save
 from pytils.translit import slugify
 from random import choices
 import string
@@ -202,6 +203,22 @@ class ItemType(models.Model):
         self.name_slug = f'{self.item.name_slug}-{self.color.name_slug}-{self.size.name_slug}-{self.height.name_slug}'
         super(ItemType, self).save(*args, **kwargs)
 
+    def color_tag(self):
+        return self.color.name
+    color_tag.short_description = 'Цвет'
+
+    def article_tag(self):
+        return self.item.article
+    article_tag.short_description = 'Артикул'
+
+    def name_tag(self):
+        return self.item.name
+    name_tag.short_description = 'Название'
+
+    def size_tag(self):
+        return self.size.name
+    name_tag.short_description = 'Размер'
+
 
 
 class ItemImage(models.Model):
@@ -261,3 +278,11 @@ class PromoCode(models.Model):
     class Meta:
         verbose_name = "Промо код"
         verbose_name_plural = "Промо коды"
+
+def item_type_post_save(sender, instance, created, **kwargs):
+    if created:
+        all_stores = Store.objects.all()
+        for store in all_stores:
+            ItemAtStore.objects.create(item_type=instance,store=store)
+
+post_save.connect(item_type_post_save, sender=ItemType)

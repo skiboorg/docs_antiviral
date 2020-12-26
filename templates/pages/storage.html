@@ -1,0 +1,40 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% load mytags %}
+{% block content %}
+    <div class="container">
+        <table >
+            <tr>
+                <th>Артикул</th>
+                <th><a style="text-decoration: underline" href="{% url 'storage' %}?sort=item">Модель</a> </th>
+                <th><a style="text-decoration: underline" href="{% url 'storage' %}?sort=color">Цвет</a></th>
+                <th>Размер</th>
+                {% for store in all_storage %}
+                    <th>{{ store.name }}</th>
+                {% endfor %}
+            </tr>
+            {% for item in all_items %}
+                <tr>
+                    <td>{{ item.item.article }}</td>
+                    <td>{{ item.item.name }}</td>
+                    <td>{{ item.color.name }}</td>
+                    <td>{{ item.size.name }}</td>
+                    {% for store in all_storage %}
+                        <td >
+                            <div style="display: flex;align-items: center;justify-content: space-evenly">
+                                <a href="{% url 'del_item' %}?storage={{ store.id }}&item={{ item.id }}"  style="font-size: 20px;font-weight: bold;cursor: pointer">-</a>
+                                {{ store.id | get_num:item.id }}
+                                <a href="{% url 'add_item' %}?storage={{ store.id }}&item={{ item.id }}"  style="font-size: 20px;font-weight: bold;cursor: pointer">+</a>
+                            </div>
+
+
+
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+
+
+        </table>
+    </div>
+{% endblock %}

@@ -21,3 +21,19 @@
     color: #919A9C;
     text-decoration: line-through;
 }
+
+table {
+   border: 1px solid grey;
+    width: 100%;
+}
+/* границы ячеек первого ряда таблицы */
+th {
+   border: 1px solid grey;
+    text-align: center;
+    padding: 10px 0;
+}
+/* границы ячеек тела таблицы */
+td {
+   border: 1px solid grey;
+    text-align: center;
+}

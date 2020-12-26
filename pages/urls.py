@@ -14,6 +14,9 @@ urlpatterns = [
 
     path('new_order/', views.new_order, name='new_order'),
     path('order/<order_code>/', views.order, name='order'),
+    path('storage/', views.storage, name='storage'),
+    path('add_item/', views.add_item, name='add_item'),
+    path('del_item/', views.del_item, name='del_item'),
 
 
 
