@@ -127,7 +127,7 @@ class Item(models.Model):
     old_price = models.IntegerField('Цена без скидки', blank=True, default=0, db_index=True)
     article = models.CharField('Артикул', max_length=50, blank=True, null=True)
     discount = models.IntegerField('Скидка', default=0)
-    short_description = models.CharField('Короткое описание', max_length=50, blank=True, null=True)
+    short_description = models.TextField('Короткое описание', blank=True, null=True)
     page_title = models.CharField('Title страницы', max_length=255, blank=True, null=True)
     page_description = models.TextField('Description страницы', blank=True, null=True)
 
@@ -224,7 +224,8 @@ class ItemType(models.Model):
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, blank=True, null=True, on_delete=models.CASCADE, verbose_name='К товару', related_name='images')
     image = models.ImageField('Изображение товара', upload_to='images/catalog/items/', blank=True)
-
+    # color = models.ForeignKey(ItemColor, verbose_name='Цвет',
+    #                           on_delete=models.CASCADE, blank=True, null=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -223,20 +223,10 @@
                 <h1 class="lk-tab__title ">Мои заказы</h1>
 
                 {% for order in orders %}
-                    <p>{{ order.order_code }}</p>
-                    {% for item in order.itemsinorder_set.all %}
+
 
                     <div class="lk-order-item">
-                    <div class="lk-order-item__img">
-                        <img src="{{ item.item.item.images.first.image.url }}" alt="">
-                    </div>
-
-                    <div class="lk-order-item__info">
-                        <p class="lk-order-item__info--status">{% if order.is_complete %}Доставлен{% endif %}</p>
-                        <p class="lk-order-item__info--status">{% if order.is_payed %}Оплачен{% endif %}</p>
-
-                        <p class="lk-order-item__info--name">{{ item.item.item.name }}</p>
-                        <div class="lk-order-item__info--group">
+                     <div class="lk-order-item__info--group">
                             <div class="lk-order-item__info--group--item">
                                 <p class="item-info__subtitle">Дата заказа</p>
                                 <p class="fs12">{{ order.created_at | date }}</p>
@@ -249,13 +239,31 @@
                                 <p class="item-info__subtitle">Адрес доставки</p>
                                 <p class="fs12">г. Уфа, ул. Казанская 4, 14</p>
                             </div>
+                         <div class="">
+                             <p class="lk-order-item__price">{{ order.total_price }}₽</p>
+                         </div>
                         </div>
+                    {% for item in order.itemsinorder_set.all %}
+                        <div class="lk-order-item__info--group">
+                        <div class="lk-order-item__img">
+                        <img src="{{ item.item.item.images.first.image.url }}" alt="">
+                    </div>
+
+                    <div class="lk-order-item__info">
+                        <p class="lk-order-item__info--status">{% if order.is_complete %}Доставлен{% endif %}</p>
+                        <p class="lk-order-item__info--status">{% if order.is_payed %}Оплачен{% endif %}</p>
+
+                        <p class="lk-order-item__info--name">{{ item.item.item.name }}</p>
+
                     </div>
                     <p class="lk-order-item__num">{{ item.number }} шт</p>
                     <p class="lk-order-item__price">{{ item.total_price }}₽</p>
+                        </div>
+
+                     {% endfor %}
                 </div>
 
-                    {% endfor %}
+
                 {% endfor %}
             </div>
             <div v-if="tabActive==='promoTab'" class="lk-tab">

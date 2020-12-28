@@ -70,8 +70,7 @@ def item(request,cat_slug,subcat_slug,item_slug):
                     size_to_add = {
                          "size_id": type.size.id,
                         "size_name": type.size.name,
-                        "heights":[]
-
+                        "heights": []
                     }
                     color["sizes"].append(size_to_add)
 
@@ -82,11 +81,8 @@ def item(request,cat_slug,subcat_slug,item_slug):
                     height_to_add = {
                         "height_id": type.height.id,
                         "height_name": type.height.name,
-
                     }
                     size['heights'].append(height_to_add)
-
-
     itemInfo = json.dumps(colors)
     return render(request, 'pages/item.html', locals())
 

@@ -34,22 +34,25 @@
                     <div class="cart-grid-form">
                         <p class="mb-15">Выберите способ доставки</p>
                         <label @click="deliveryPrice=100" class="cart-radio" for="d-1">
-                            <input type="radio" name="delivery" id="d-1" value="Курьером1">
-                            <p class="cart-radio__p1">Курьером1</p>
+                            <input type="radio" name="delivery" id="d-1"  value="СДЕК">
+                            <p class="cart-radio__p1">СДЕК</p>
                             <p class="cart-radio__p2">от 1 дня<br>100 ₽</p>
                             <span class="checkmark"></span>
                         </label>
-                         <label @click="deliveryPrice=300" class="cart-radio" for="d-2">
-                            <input type="radio" name="delivery" id="d-2" value="Курьером2">
-                             <p class="cart-radio__p1">Курьером2</p>
-                            <p class="cart-radio__p2">от 1 дня<br>300 ₽</p>
+                         <label @click="deliveryPrice=0" class="cart-radio" for="d-2">
+                            <input type="radio" name="delivery" id="d-2" value="Самовывоз">
+                             <p class="cart-radio__p1">Самовывоз</p>
+                            <p class="cart-radio__p2">бесплатно<br>по адресу 1234</p>
                              <span class="checkmark"></span>
                         </label>
-                        <input type="text" name="street" placeholder="Улица">
+                        <div v-if="deliveryPrice>0">
+                             <input type="text" name="street" placeholder="Улица">
                         <div class="cart-grid-form__group">
                             <input type="text" name="num" placeholder="Дом">
                              <input type="text" name="num1" placeholder="Квартира/офис">
                         </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="cart-grid b-bottom">

@@ -79,6 +79,7 @@ var app = new Vue({
         selectedHeight:null,
         selectedHeightName:'Выберите цвет',
         sizes:null,
+        mobileMenuActive:false,
         deliveryPrice:0,
         heights:null,
         coords: [54.82896654088406, 39.831893822753904],
