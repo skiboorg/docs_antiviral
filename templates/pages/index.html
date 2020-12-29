@@ -21,18 +21,20 @@
 
         </div>
     </section>
+    {% for collection in collections %}
     <section class="collection">
         <div class="container">
             <h3 class="section-header">
-                НОВАЯ ЖЕНСКАЯ КОЛЛЕКЦИЯ
+                {{ collection.name }}
             </h3>
-            <p class="section-header__link"><a href="{% url 'category' 'woman' %}">Смотреть полностью</a></p>
+            <p class="section-header__link"><a href="{% url 'subcategory' collection.subcategory.category.name_slug collection.subcategory.name_slug %}">Смотреть полностью</a></p>
             <div class="collection-wrapper">
-                {% for itemtype in woman_collection %}
-                <div class="collection-item">
-                    <p class="collection-item-name">{{ itemtype.item.collection.subcategory.name }}</p>
+                {% for itemtype in collection.items.all %}
+                    {% if forloop.counter < 4 %}
+                     <div class="collection-item">
+                    <p class="collection-item-name">{{ itemtype.collection.subcategory.name }}</p>
                     <div class="collection-item__img" >
-                          <a href="{% url 'item' itemtype.item.collection.subcategory.category.name_slug itemtype.item.collection.subcategory.name_slug itemtype.item.name_slug %}">
+                          <a href="{% url 'item' collection.subcategory.category.name_slug collection.subcategory.name_slug itemtype.item.name_slug %}">
                            <img src="{{ itemtype.item.images.first.image.url }}" alt="">
                         </a>
 
@@ -40,36 +42,18 @@
                     <p class="collection-item__name">{{ itemtype.item.name }}</p>
                     <p class="collection-item__price">{{ itemtype.item.price }} ₽</p>
                 </div>
+                    {% endif %}
+
                 {% endfor %}
 
 
             </div>
         </div>
     </section>
-    <section class="collection">
-        <div class="container">
-            <h3 class="section-header">
-                НОВАЯ МУЖСКАЯ КОЛЛЕКЦИЯ
-            </h3>
-            <p class="section-header__link"><a href="{% url 'category' 'man' %}">Смотреть полностью</a></p>
-            <div class="collection-wrapper">
-             {% for itemtype in man_collection %}
-                <div class="collection-item">
-                    <p class="collection-item-name">{{ itemtype.item.collection.subcategory.name }}</p>
-                    <div class="collection-item__img" >
-                        <a href="{% url 'item' itemtype.item.collection.subcategory.category.name_slug itemtype.item.collection.subcategory.name_slug itemtype.item.name_slug %}">
-                           <img src="{{ itemtype.item.images.first.image.url }}" alt="">
-                        </a>
+    {% endfor %}
 
-                    </div>
-                    <p class="collection-item__name">{{ itemtype.item.name }}</p>
-                    <p class="collection-item__price">{{ itemtype.item.price }} ₽</p>
-                </div>
-                {% endfor %}
 
-            </div>
-        </div>
-    </section>
+
     <section class="about">
         <div class="container">
             <div class="about-wrapper">

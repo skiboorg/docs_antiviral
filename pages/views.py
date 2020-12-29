@@ -14,8 +14,9 @@ def create_password():
 
 
 def index(request):
-    man_collection = ItemType.objects.filter(item__collection__subcategory__category_id=1, is_show_at_index=True)
-    woman_collection = ItemType.objects.filter(item__collection__subcategory__category_id=2, is_show_at_index=True)
+    # man_collection = ItemType.objects.filter(item__collection__subcategory__category_id=1, is_show_at_index=True)
+    # woman_collection = ItemType.objects.filter(item__collection__subcategory__category_id=2, is_show_at_index=True)
+    collections = Collection.objects.filter(is_show_at_home=True)
     return render(request, 'pages/index.html', locals())
 
 

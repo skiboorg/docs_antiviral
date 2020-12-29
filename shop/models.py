@@ -61,6 +61,7 @@ class Collection(models.Model):
     subcategory = models.ForeignKey(SubCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='Относится к')
     name = models.CharField('Название', max_length=255, blank=True, null=True)
     description = models.CharField('Описание', max_length=255, blank=True, null=True)
+    is_show_at_home = models.BooleanField('Отображать на главной', default=False)
 
     def __str__(self):
         return f'Коллекция {self.name} подкатегории {self.subcategory.name}'
@@ -116,9 +117,9 @@ class ItemHeight(models.Model):
         verbose_name_plural = "Рост"
 
 class Item(models.Model):
-    collection = models.ForeignKey(Collection, verbose_name='Коллекция',
-                                   on_delete=models.SET_NULL, blank=True, null=True, db_index=True,
-                                   related_name='items')
+    # collection = models.ForeignKey(Collection, verbose_name='Коллекция',
+    #                                on_delete=models.SET_NULL, blank=True, null=True, db_index=True,
+    #                                related_name='items')
 
     name = models.CharField('Название товара', max_length=255, blank=True, null=True)
     name_lower = models.CharField(max_length=255, blank=True, null=True,default='',editable=False)
@@ -180,6 +181,9 @@ class Item(models.Model):
 
 
 class ItemType(models.Model):
+    collection = models.ForeignKey(Collection, verbose_name='Коллекция',
+                                   on_delete=models.SET_NULL, blank=True, null=True, db_index=True,
+                                   related_name='items')
 
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True,editable=False)
     item = models.ForeignKey(Item, verbose_name='Базовый товар',

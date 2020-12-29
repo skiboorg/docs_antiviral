@@ -16,9 +16,16 @@
     align-items: center;
     justify-content: flex-start;
 }
+.item-info__price.new_price{
+    color: #E74343;
+     margin-right: 20px;
+}
 .item-info__price.old-price{
-    margin-right: 20px;
-    color: #919A9C;
+
+    color: #519999;
+    opacity: 0.5;
+    font-size: 18px;
+    font-weight: bold;
     text-decoration: line-through;
 }
 
