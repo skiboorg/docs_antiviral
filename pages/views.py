@@ -96,7 +96,7 @@ def item(request,cat_slug,subcat_slug,item_slug):
             color['images'].append(image_to_add)
 
     itemInfo = json.dumps(colors)
-    print(colors)
+    # print(colors)
     return render(request, 'pages/item.html', locals())
 
 
