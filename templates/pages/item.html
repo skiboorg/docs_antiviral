@@ -12,18 +12,18 @@
     <section id="item" class="item">
         <div class="container">
             <div class="item-wrapper">
-{#                <div class="item-images">#}
+                <div class="item-images">
 {#                    {% for image in item.images.all %}#}
 {#                    <div class="item-images__item">#}
 {#                        <img src="{{ image.image.url }}" alt="">#}
 {#                    </div>#}
 {#                    {% endfor %}#}
- <transition-group name="list" tag="div" class="item-images">
+{# <transition-group name="list" tag="div" class="item-images">#}
                     <div class="item-images__item" v-for="image in images" :key="image.image_id">
                         <img :src="image.image" alt="">
                     </div>
-    </transition-group>
-{#                </div>#}
+{#    </transition-group>#}
+                </div>
                 <div class="swiper-container">
                     <!-- Additional required wrapper -->
                     <div class="swiper-wrapper">
