@@ -117,9 +117,9 @@ class ItemHeight(models.Model):
         verbose_name_plural = "Рост"
 
 class Item(models.Model):
-    # collection = models.ForeignKey(Collection, verbose_name='Коллекция',
-    #                                on_delete=models.SET_NULL, blank=True, null=True, db_index=True,
-    #                                related_name='items')
+    collection = models.ForeignKey(Collection, verbose_name='Коллекция',
+                                   on_delete=models.SET_NULL, blank=True, null=True, db_index=True,
+                                   related_name='items')
 
     name = models.CharField('Название товара', max_length=255, blank=True, null=True)
     name_lower = models.CharField(max_length=255, blank=True, null=True,default='',editable=False)
@@ -155,12 +155,14 @@ class Item(models.Model):
     image_tag.short_description = 'Основная картинка'
 
     def save(self, *args, **kwargs):
+        if self.old_price == 0:
+            self.old_price = self.price
         if self.discount > 0:
             self.old_price = self.price
             self.price = self.price - (self.price * self.discount / 100)
         else:
             self.price = self.old_price
-            self.old_price = 0
+
 
         slug = slugify(self.name)
         if not self.name_slug:
@@ -181,9 +183,7 @@ class Item(models.Model):
 
 
 class ItemType(models.Model):
-    collection = models.ForeignKey(Collection, verbose_name='Коллекция',
-                                   on_delete=models.SET_NULL, blank=True, null=True, db_index=True,
-                                   related_name='items')
+
 
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True,editable=False)
     item = models.ForeignKey(Item, verbose_name='Базовый товар',
@@ -230,6 +230,7 @@ class ItemImage(models.Model):
     image = models.ImageField('Изображение товара', upload_to='images/catalog/items/', blank=True)
     # color = models.ForeignKey(ItemColor, verbose_name='Цвет',
     #                           on_delete=models.CASCADE, blank=True, null=True, db_index=True)
+    color = models.ForeignKey(ItemColor, on_delete=models.SET_NULL, verbose_name='Цвет', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

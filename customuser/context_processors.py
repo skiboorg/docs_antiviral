@@ -13,7 +13,10 @@ def check_profile(request):
             promo_rub = request.user.promo_code.summ
     else:
         s_key = request.session.session_key
-        guest = Guest.objects.get(session=s_key)
+        try:
+            guest = Guest.objects.get(session=s_key)
+        except:
+            guest = Guest.objects.create(session=s_key)
         if guest.promo_code:
             promo_percent = guest.promo_code.discount
             promo_rub = guest.promo_code.summ

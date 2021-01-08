@@ -29,18 +29,18 @@
             </h3>
             <p class="section-header__link"><a href="{% url 'subcategory' collection.subcategory.category.name_slug collection.subcategory.name_slug %}">Смотреть полностью</a></p>
             <div class="collection-wrapper">
-                {% for itemtype in collection.items.all %}
+                {% for item in collection.items.all %}
                     {% if forloop.counter < 4 %}
                      <div class="collection-item">
-                    <p class="collection-item-name">{{ itemtype.collection.subcategory.name }}</p>
+                    <p class="collection-item-name">{{ item.collection.subcategory.name }}</p>
                     <div class="collection-item__img" >
-                          <a href="{% url 'item' collection.subcategory.category.name_slug collection.subcategory.name_slug itemtype.item.name_slug %}">
-                           <img src="{{ itemtype.item.images.first.image.url }}" alt="">
+                          <a href="{% url 'item' collection.subcategory.category.name_slug collection.subcategory.name_slug item.name_slug %}">
+                           <img src="{{ item.images.first.image.url }}" alt="">
                         </a>
 
                     </div>
-                    <p class="collection-item__name">{{ itemtype.item.name }}</p>
-                    <p class="collection-item__price">{{ itemtype.item.price }} ₽</p>
+                    <p class="collection-item__name">{{ item.name }}</p>
+                    <p class="collection-item__price">{{ item.price }} ₽</p>
                 </div>
                     {% endif %}
 

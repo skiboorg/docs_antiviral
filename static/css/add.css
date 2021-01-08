@@ -44,3 +44,16 @@ td {
    border: 1px solid grey;
     text-align: center;
 }
+.list-enter-active .list-leave-active {
+   opacity: 0;
+  transition: all .1s;
+}
+.list-leave-active {
+   opacity: 0;
+  transition: all .5s;
+}
+.list-enter, .list-enter-to{
+}
+.list-leave, .list-leave-to{
+  transform: translateX(-20px);
+}

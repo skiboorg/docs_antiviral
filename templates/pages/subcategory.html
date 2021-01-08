@@ -22,17 +22,17 @@
             </h3>
 
             <div style="flex-wrap: wrap" class="collection-wrapper">
-                {% for collection_item in collection.items.all %}
-                <div style="margin-bottom: 20px" class="collection-item">
-                    <p class="collection-item-name">{{ collection.subcategory.name}}</p>
+                {% for item in collection.items.all %}
+                   <div  class="collection-item">
+                    <p class="collection-item-name">{{ item.collection.subcategory.name }}</p>
                     <div class="collection-item__img" >
-                        <a href="{% url 'item' collection.subcategory.category.name_slug collection.subcategory.name_slug collection_item.item.name_slug %}">
-                           <img src="{{  collection_item.item.images.first.image.url }}" alt="">
+                          <a href="{% url 'item' collection.subcategory.category.name_slug collection.subcategory.name_slug item.name_slug %}">
+                           <img src="{{ item.images.first.image.url }}" alt="">
                         </a>
 
                     </div>
-                    <p class="collection-item__name">{{ collection_item.item.name }}</p>
-                    <p class="collection-item__price">{{ collection_item.item.price }} ₽</p>
+                    <p class="collection-item__name">{{ item.name }}</p>
+                    <p class="collection-item__price">{{ item.price }} ₽</p>
                 </div>
                 {% endfor %}
 

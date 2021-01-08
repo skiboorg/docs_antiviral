@@ -42,7 +42,6 @@ def partner(request):
 
 def item(request,cat_slug,subcat_slug,item_slug):
     item = Item.objects.get(name_slug=item_slug)
-
     info = []
     colors=[]
     sizes=[]
@@ -61,6 +60,7 @@ def item(request,cat_slug,subcat_slug,item_slug):
 
     for color in colors:
         color["sizes"] = []
+        color["images"] = []
 
     for type in types:
         stores = ItemAtStore.objects.filter(item_type=type)
@@ -84,7 +84,19 @@ def item(request,cat_slug,subcat_slug,item_slug):
                         "height_name": type.height.name,
                     }
                     size['heights'].append(height_to_add)
+
+
+    for color in colors:
+        images = ItemImage.objects.filter(item=type.item, color_id=color['color_id'])
+        for image in images:
+            image_to_add={
+                "image_id":image.id,
+                "image":image.image.url,
+            }
+            color['images'].append(image_to_add)
+
     itemInfo = json.dumps(colors)
+    print(colors)
     return render(request, 'pages/item.html', locals())
 
 

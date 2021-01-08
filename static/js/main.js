@@ -79,6 +79,7 @@ var app = new Vue({
         selectedHeight:null,
         selectedHeightName:'Выберите цвет',
         sizes:null,
+        images:null,
         mobileMenuActive:false,
         deliveryPrice:0,
         heights:null,
@@ -108,6 +109,7 @@ var app = new Vue({
             this.selectedColor = this.itemInfo[index].color_id
             this.sizes = this.itemInfo[index].sizes
             this.heights = this.itemInfo[index].heights
+            this.images = this.itemInfo[index].images
             this.selectedColorName = this.itemInfo[index].color_name
             console.log(this.selectedColorName)
             this.selectedSizeName = 'Выберите размер'
@@ -321,6 +323,7 @@ var app = new Vue({
     watch: {
         itemInfo: function (val){
             console.log('iteminfo change')
+            console.log(this.itemInfo)
             this.selectColor(0)
         },
         headerCartItems: function (val) {
