@@ -70,8 +70,9 @@ var app = new Vue({
     el: '#app',
     data: {
         tabActive:'profileTab',
-
+        selectedItemHeights:[{id:1,name:'123'},{id:2,name:'1233'},],
         itemInfo:'444',
+
         selectedColor:999,
         selectedColorName:null,
         selectedSize:null,
@@ -321,6 +322,7 @@ var app = new Vue({
         },
     },
     watch: {
+
         itemInfo: function (val){
             console.log('iteminfo change')
             console.log(this.itemInfo)

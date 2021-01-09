@@ -9,6 +9,7 @@
                 <th><a style="text-decoration: underline" href="{% url 'storage' %}?sort=item">Модель</a> </th>
                 <th><a style="text-decoration: underline" href="{% url 'storage' %}?sort=color">Цвет</a></th>
                 <th>Размер</th>
+                <th>Рост</th>
                 {% for store in all_storage %}
                     <th>{{ store.name }}</th>
                 {% endfor %}
@@ -19,6 +20,7 @@
                     <td>{{ item.item.name }}</td>
                     <td>{{ item.color.name }}</td>
                     <td>{{ item.size.name }}</td>
+                    <td>{{ item.height.name }}</td>
                     {% for store in all_storage %}
                         <td >
                             <div style="display: flex;align-items: center;justify-content: space-evenly">

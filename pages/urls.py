@@ -18,6 +18,12 @@ urlpatterns = [
     path('add_item/', views.add_item, name='add_item'),
     path('del_item/', views.del_item, name='del_item'),
 
+    path('new_item/', views.new_item, name='new_item'),
+    path('create_item/', views.create_item, name='create_item'),
+
+
+
+
 
 
 ]

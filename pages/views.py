@@ -1,6 +1,6 @@
 import json
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 
 from order.models import *
 from django.shortcuts import render
@@ -162,6 +162,26 @@ def order(request, order_code):
         return render(request, 'pages/order_complete.html', locals())
     else:
         return HttpResponseRedirect('/')
+
+def new_item(request):
+    if request.user.is_superuser:
+        all_base_items = Item.objects.all()
+        all_colors = ItemColor.objects.all()
+        all_sizes = ItemSize.objects.all()
+        all_heigths = ItemHeight.objects.all()
+        return render(request, 'pages/new_item.html', locals())
+
+def create_item(request):
+
+    if request.POST:
+        for height in request.POST.getlist('heights'):
+            print(height)
+            ItemType.objects.create(item_id=request.POST.get('item_id'),
+                                    color_id=request.POST.get('color_id'),
+                                    size_id=request.POST.get('size_id'),
+                                    height_id=height)
+    return HttpResponseRedirect('/new_item')
+
 
 def storage(request):
     if request.user.is_superuser:

@@ -1,0 +1,39 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% load mytags %}
+{% block content %}
+    <div class="container">
+    <h3 class="section-header mb-40">Создание видов товара</h3>
+        <form action="{% url 'create_item' %}" method="post">{% csrf_token %}
+            <div class="mb-15">
+                <select name="item_id" id="" >
+                    {% for base_item in all_base_items %}
+                        <option value="{{ base_item.id }}">{{ base_item.name }} (арт :{{ base_item.article }})</option>
+                    {% endfor %}
+                </select>
+                <select name="color_id" id="">
+                    {% for color in all_colors %}
+                        <option value="{{ color.id }}">{{ color.name }}</option>
+                    {% endfor %}
+                </select>
+                <select name="size_id" id="">
+                    {% for size in all_sizes %}
+                        <option value="{{ size.id }}">{{ size.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div  class="mb-15">
+                {% for heigth in all_heigths %}
+                    <label style="cursor:pointer;display: flex; align-items: center;justify-content: flex-start" for="h_{{ heigth.id}}" >
+                        <input style="max-width: 30px;" id="h_{{ heigth.id}}" name="heights" type="checkbox" value="{{ heigth.id}}">{{ heigth.name }}
+                    </label>
+                {% endfor %}
+
+
+            </div>
+            <button style="width: 300px" class="btn mb-40" type="submit">Создать</button>
+
+        </form>
+
+    </div>
+{% endblock %}
