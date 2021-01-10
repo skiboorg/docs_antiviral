@@ -119,7 +119,7 @@ def category(request,cat_slug):
 
 def new_order(request):
     order_code = create_password()
-
+    print(request.POST)
 
     if request.user.is_authenticated:
         order = Order.objects.create(client=request.user, order_code=order_code,

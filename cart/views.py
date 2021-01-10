@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from cart.models import Cart
 from customuser.models import Guest
 # from item.models import PromoCode,Item,SubCategory
-from shop.models import ItemType
+from shop.models import ItemType,City
 from datetime import datetime
 # from order.models import Wishlist
 
@@ -38,7 +38,7 @@ def get_all_items(client=None,guest=None):
         return allitems
 
 def show_cart(request):
-
+    cities = City.objects.all()
     return render(request, 'pages/cart.html', locals())
 
 def wishlist_delete(request):

@@ -7,6 +7,17 @@ import string
 from colorfield.fields import ColorField
 from django.utils.safestring import mark_safe
 
+class City(models.Model):
+    name = models.CharField('Название города', max_length=255, blank=False, null=True)
+    price = models.IntegerField('Стоимость доставки',blank=False,null=True)
+
+    def __str__(self):
+        return f'{self.name} - стоимость {self.price}'
+
+    class Meta:
+        verbose_name = "Город"
+        verbose_name_plural = "Города"
+
 class Category(models.Model):
     name = models.CharField('Название категории', max_length=255, blank=True, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True)

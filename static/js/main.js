@@ -72,7 +72,8 @@ var app = new Vue({
         tabActive:'profileTab',
         selectedItemHeights:[{id:1,name:'123'},{id:2,name:'1233'},],
         itemInfo:'444',
-
+        cdekSelected:false,
+        cityPrice:0,
         selectedColor:999,
         selectedColorName:null,
         selectedSize:null,
@@ -86,6 +87,7 @@ var app = new Vue({
         heights:null,
         coords: [54.82896654088406, 39.831893822753904],
         cartTotal:0,
+        cartTotaldeliveryPrice:0,
         cartTotalwPromo:0,
         cartItemsNum:0,
         cartNotEmpty : false,
@@ -320,8 +322,17 @@ var app = new Vue({
                     }).showToast();
                 })
         },
+        handleCityChange: function (e){
+            this.$refs.city_input.value = e.target.options[e.target.options.selectedIndex].dataset.city
+
+        }
     },
     watch: {
+        deliveryPrice: function (val){
+            console.log(this.cartTotal)
+            console.log(val)
+            this.cartTotaldeliveryPrice = this.cartTotal + parseInt(val)
+        },
 
         itemInfo: function (val){
             console.log('iteminfo change')
