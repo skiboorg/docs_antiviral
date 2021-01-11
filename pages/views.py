@@ -119,7 +119,6 @@ def category(request,cat_slug):
 
 def new_order(request):
     order_code = create_password()
-    print(request.POST)
     if request.user.is_authenticated:
         order = Order.objects.create(client=request.user, order_code=order_code,
                                      payment=request.POST.get('pay'),
@@ -213,7 +212,6 @@ def del_item(request):
 def search_city(request):
     body = json.loads(request.body)
     return_dict = []
-    print(body)
     cities = City.objects.filter(name_lower__contains=body['city'])
     for c in cities:
         return_dict.append(
@@ -223,6 +221,4 @@ def search_city(request):
                 "price":c.price
             }
         )
-
-    print(cities)
     return JsonResponse(return_dict,safe=False)
