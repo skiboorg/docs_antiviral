@@ -57,3 +57,50 @@ td {
 .list-leave, .list-leave-to{
   transform: translateX(-20px);
 }
+.item-images img{
+    width: 295px;
+    height: 345px;
+    object-fit: cover;
+}
+
+@media (max-width: 550px) {
+    .item-info__params{
+        flex-direction: column;
+    }
+    .item-info__param{
+        margin-bottom: 20px;
+        width: 100%;
+    }
+    .item-info__param .custom-select{
+        width: 100%;
+    }
+    .btn{
+        max-width: 100%;
+    }
+
+}
+.city-select{
+    position: relative;
+}
+.city-select__result{
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    background: #FFFFFF;
+    top: 66px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    left:0;
+    right: 0;
+}
+
+.city-select__result p:hover{
+    cursor: pointer;
+    background: #519999;
+    color: #FFFFFF;
+}
+
+.city-select__result.cityResultActive{
+     opacity: 1;
+    pointer-events: all;
+}

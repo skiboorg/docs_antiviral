@@ -72,8 +72,13 @@ var app = new Vue({
         tabActive:'profileTab',
         selectedItemHeights:[{id:1,name:'123'},{id:2,name:'1233'},],
         itemInfo:'444',
+        selectedCity:null,
         cdekSelected:false,
         cityPrice:0,
+        cityselectDropVisible:false,
+        selectResults:[
+
+        ],
         selectedColor:999,
         selectedColorName:null,
         selectedSize:null,
@@ -107,6 +112,40 @@ var app = new Vue({
     },
 
     methods:{
+        citySearch(){
+            if(this.selectedCity.length>1){
+                console.log('goggo')
+                let body={
+                city:this.selectedCity
+            }
+                let csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
+            fetch(`/search_city/`, {
+                method: 'post',
+                body: JSON.stringify(body),
+                headers: { "X-CSRFToken": csrfmiddlewaretoken },
+                credentials: 'same-origin'
+            }).then(res=>res.json())
+                .then(res => {
+                    console.log(res)
+                    res.length>0 ? this.selectResults=res : this.cityselectDropVisible = false
+                    this.cityselectDropVisible = true
+
+
+
+                })
+            }else {
+                this.cityselectDropVisible = false
+            }
+        },
+        selectCity(price,name){
+            console.log(price,name)
+
+            this.selectedCity=name
+            this.deliveryPrice=price
+            this.$refs.city_input.value = name
+
+
+        },
         selectColor(index){
             console.log(index)
             this.selectedColor = this.itemInfo[index].color_id

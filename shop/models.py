@@ -9,10 +9,16 @@ from django.utils.safestring import mark_safe
 
 class City(models.Model):
     name = models.CharField('Название города', max_length=255, blank=False, null=True)
+    name_lower = models.CharField('Название города', max_length=255, blank=False, null=True, editable=False)
     price = models.IntegerField('Стоимость доставки',blank=False,null=True)
 
     def __str__(self):
         return f'{self.name} - стоимость {self.price}'
+
+    def save(self, *args, **kwargs):
+        self.name_lower = self.name.lower()
+
+        super(City, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Город"

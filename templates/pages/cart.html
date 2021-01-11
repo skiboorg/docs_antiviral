@@ -47,12 +47,22 @@
                             <span class="checkmark"></span>
                         </label>
                         <div v-if="cdekSelected">
-                            <select id="city_select" class="mb-15" style="width: 100%" @change="handleCityChange" name="delivery_price" v-model="deliveryPrice">
-                                <option value="0">Выберите город</option>
-                                {% for city in cities %}
-                                    <option value="{{ city.price }}" data-city="{{ city.name }}">{{ city.name }}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="city-select">
+
+                            <input ref="citySelect" type="text" @keyup="citySearch" v-model="selectedCity" placeholder="Начните вводить город">
+                            <div class="city-select__result" :class=" {'cityResultActive': selectResults.length > 0 && cityselectDropVisible}">
+                                <p @click="selectCity(result.price,result.name),cityselectDropVisible=false"
+                                   v-for="result in selectResults" :key="result.id" >[[result.name]]</p>
+
+                            </div>
+                        </div>
+{#                            <select id="city_select" class="mb-15" style="width: 100%" @change="handleCityChange" name="delivery_price" v-model="deliveryPrice">#}
+{#                                <option value="0">Выберите город</option>#}
+{#                                {% for city in cities %}#}
+{#                                    <option value="{{ city.price }}" data-city="{{ city.name }}">{{ city.name }}</option>#}
+{#                                {% endfor %}#}
+{#                            </select>#}
+
                             <input ref="city_input" type="hidden" name="city" value="Самовывоз">
                              <input type="text" name="street" placeholder="Улица">
                         <div class="cart-grid-form__group">
