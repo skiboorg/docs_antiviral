@@ -17,7 +17,8 @@
         </div>
     </section>
     <section>
-        <div class="container simple-image">
+
+        <div {% if banner.url %} onclick="window.location.href={{ banner.url }}" {% endif %} class="container simple-image" style="background: url(../media/{{ banner.image }}) no-repeat center;">
 
         </div>
     </section>

@@ -53,17 +53,15 @@ def order(request, order_code):
         return HttpResponseRedirect('/')
 
 def account_edit(request):
-
     client = request.user
-    print(request.POST)
     if request.POST:
+
         form = UpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             client.profile_ok = True
             client.save(force_update=True)
-            print(form.errors)
-        return render(request, 'pages/lk.html', locals())
+        return HttpResponseRedirect('/user/lk')
     else:
 
         form = UpdateForm(instance=client)
@@ -115,26 +113,24 @@ def log_in(request):
     return_dict = {}
     email = request.POST.get('email')
     password = request.POST.get('password')
-    print(request.POST)
 
     user = authenticate(email=email, password=password)
-    print(user)
+
     if user is not None:
         login(request, user)
         return_dict['result'] = 'success'
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/user/lk/')
 
     else:
-        login_error = True
+        error = 'Вы ввели не коректные данные'
         return_dict['result'] = 'invalid'
-        return HttpResponseRedirect('/user/login/')
+        return render(request, 'pages/login.html', locals())
 
 
 
 def signup(request):
     return_dict = {}
     if request.method == 'POST':
-
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
@@ -153,7 +149,6 @@ def signup(request):
             return HttpResponseRedirect('/')
         else:
             error = 'Вы ввели не коректные данные'
-            print(form.errors)
             return render(request, 'pages/register.html', locals())
 
 def apply_promo(request):

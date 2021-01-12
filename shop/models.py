@@ -7,6 +7,18 @@ import string
 from colorfield.fields import ColorField
 from django.utils.safestring import mark_safe
 
+class Banner(models.Model):
+    image = models.ImageField('Изображение ', upload_to='images/banner/', blank=True,null=True)
+    url = models.CharField('Ссылка', max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f'Баннер id {self.id}'
+
+    class Meta:
+        verbose_name = "Баннер"
+        verbose_name_plural = "Баннеры"
+
+
 class City(models.Model):
     name = models.CharField('Название города', max_length=255, blank=False, null=True)
     name_lower = models.CharField('Название города', max_length=255, blank=False, null=True, editable=False)

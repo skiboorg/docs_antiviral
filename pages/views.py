@@ -17,7 +17,10 @@ def index(request):
     # man_collection = ItemType.objects.filter(item__collection__subcategory__category_id=1, is_show_at_index=True)
     # woman_collection = ItemType.objects.filter(item__collection__subcategory__category_id=2, is_show_at_index=True)
     collections = Collection.objects.filter(is_show_at_home=True)
+    banner = Banner.objects.all().first()
+    print(banner)
     return render(request, 'pages/index.html', locals())
+
 
 
 def about(request):

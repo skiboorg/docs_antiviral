@@ -181,37 +181,7 @@
                     </div>
                     <div class="lk-tab-grid__item">
                         <p  class="lk-tab-grid__item--title">Дата рождения</p>
-                        <div class="lk-tab-grid__item--group">
-                            <div class="">
-                                <p class="item-info__subtitle">день</p>
-                                <select >
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                </select>
-                            </div>
-
-                            <div class="">
-                                <p class="item-info__subtitle">месяц</p>
-                                <select >
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                </select>
-                            </div>
-                            <div class="">
-                                <p class="item-info__subtitle">год</p>
-                                <select >
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                </select>
-                            </div>
-
-                        </div>
+                        <input type="date" name="birthday" value="{{ request.user.birthday | date:"Y-m-d"}}">
 
                     </div>
 
@@ -276,7 +246,7 @@
                     </div>
                     <div class="lk-tab-grid__item">
                         <p  class="lk-tab-grid__item--title">Текущая скидка</p>
-                        <p class="lk-tab-discount">15%</p>
+                        <p class="lk-tab-discount">0%</p>
                     </div>
                 </div>
 

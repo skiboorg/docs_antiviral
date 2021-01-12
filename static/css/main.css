@@ -450,7 +450,7 @@ button:focus {
 }
 
 .simple-image {
-  background: url(../images/index-img-1.png) no-repeat center;
+  cursor: pointer;
   height: 500px;
 }
 
@@ -2215,8 +2215,7 @@ button:focus {
   }
 
   .simple-image {
-    background: url(../images/index-img-1-450.jpg) no-repeat center;
-    background-size: cover;
+    background-size: cover !important;
     height: 400px;
   }
 

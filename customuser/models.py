@@ -52,6 +52,7 @@ class User(AbstractUser):
     size = models.CharField('Размер', max_length=50, blank=True, null=True)
     height = models.CharField('Рост', max_length=50, blank=True, null=True)
     profile_ok = models.BooleanField(default=False)
+    birthday = models.DateField('Д/Р',blank=True, null=True)
     promo_code = models.ForeignKey(PromoCode, blank=True, null=True, on_delete=models.SET_NULL,
                                    verbose_name='Промо код')
     USERNAME_FIELD = 'email'
