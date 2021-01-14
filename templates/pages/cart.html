@@ -46,6 +46,18 @@
                             <p class="cart-radio__p2">от 1 дня<br>100 ₽</p>
                             <span class="checkmark"></span>
                         </label>
+                         <label @click="cdekSelected=true" class="cart-radio" for="d-3">
+                            <input type="radio" name="delivery" id="d-3"  value="Яндекс доставка">
+                            <p class="cart-radio__p1">Яндекс доставка</p>
+                            <p class="cart-radio__p2">от 1 дня<br>100 ₽</p>
+                            <span class="checkmark"></span>
+                        </label>
+                         <label @click="cdekSelected=true" class="cart-radio" for="d-4">
+                            <input type="radio" name="delivery" id="d-4"  value="Почта России">
+                            <p class="cart-radio__p1">Почта России</p>
+                            <p class="cart-radio__p2">от 1 дня<br>100 ₽</p>
+                            <span class="checkmark"></span>
+                        </label>
                         <div v-if="cdekSelected">
                         <div class="city-select">
 

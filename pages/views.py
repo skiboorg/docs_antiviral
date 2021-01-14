@@ -76,7 +76,8 @@ def item(request,cat_slug,subcat_slug,item_slug):
                         "size_name": type.size.name,
                         "heights": []
                     }
-                    color["sizes"].append(size_to_add)
+                    if not size_to_add in color["sizes"]:
+                        color["sizes"].append(size_to_add)
 
     for type in types:
         for color in colors:
@@ -175,6 +176,8 @@ def new_item(request):
 def create_item(request):
 
     if request.POST:
+        # try:
+            #item = ItemType.objects.
         for height in request.POST.getlist('heights'):
             print(height)
             ItemType.objects.create(item_id=request.POST.get('item_id'),
