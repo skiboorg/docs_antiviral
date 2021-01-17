@@ -18,8 +18,19 @@ class Banner(models.Model):
         verbose_name = "Баннер"
         verbose_name_plural = "Баннеры"
 
+class DeliveryType(models.Model):
+    name = models.CharField('Название типа доставки', max_length=255, blank=False, null=True)
+    time = models.CharField('Минимальное время доставки', max_length=255, blank=False, null=True)
+    price = models.CharField('Минимальная стоимость доставки', max_length=255, blank=False, null=True)
+    def __str__(self):
+        return f'Тип доставки : {self.name}'
+
+    class Meta:
+        verbose_name = "Тип доставки"
+        verbose_name_plural = "Типы доставки"
 
 class City(models.Model):
+    type = models.ForeignKey(DeliveryType,on_delete=models.CASCADE,null=True,blank=False,verbose_name='Относится к ')
     name = models.CharField('Название города', max_length=255, blank=False, null=True)
     name_lower = models.CharField('Название города', max_length=255, blank=False, null=True, editable=False)
     price = models.IntegerField('Стоимость доставки',blank=False,null=True)

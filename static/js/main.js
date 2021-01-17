@@ -79,6 +79,7 @@ var app = new Vue({
         selectResults:[
 
         ],
+        selectedDeliveryType:null,
         selectedColor:999,
         selectedColorName:null,
         selectedSize:null,
@@ -113,10 +114,12 @@ var app = new Vue({
 
     methods:{
         citySearch(){
+            console.log(this.selectedDeliveryType)
             if(this.selectedCity.length>1){
                 console.log('goggo')
                 let body={
-                city:this.selectedCity
+                city:this.selectedCity,
+                   delivery:this.selectedDeliveryType
             }
                 let csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
             fetch(`/search_city/`, {
