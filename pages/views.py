@@ -216,7 +216,6 @@ def del_item(request):
 
 def search_city(request):
     body = json.loads(request.body)
-    print(body)
     return_dict = []
     cities = City.objects.filter(type_id=body['delivery'], name_lower__contains=body['city'])
     for c in cities:
