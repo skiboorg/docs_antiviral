@@ -14,6 +14,7 @@ def create_password():
 
 
 def index(request):
+    title = 'DOC’S - медицинская одежда для современных врачей'
     # man_collection = ItemType.objects.filter(item__collection__subcategory__category_id=1, is_show_at_index=True)
     # woman_collection = ItemType.objects.filter(item__collection__subcategory__category_id=2, is_show_at_index=True)
     collections = Collection.objects.filter(is_show_at_home=True)
@@ -23,7 +24,7 @@ def index(request):
 
 
 def about(request):
-
+    title ='О нас'
     return render(request, 'pages/about.html', locals())
 
 
@@ -33,7 +34,7 @@ def delivery(request):
 
 
 def contacts(request):
-
+    title = 'Контакты'
     return render(request, 'pages/contact.html', locals())
 
 
@@ -44,6 +45,8 @@ def partner(request):
 
 def item(request,cat_slug,subcat_slug,item_slug):
     item = Item.objects.get(name_slug=item_slug)
+    title = item.name
+
     info = []
     colors=[]
     sizes=[]
@@ -106,7 +109,9 @@ def item(request,cat_slug,subcat_slug,item_slug):
 def subcategory(request,cat_slug,subcat_slug):
     if cat_slug == 'man':
         slider_text ='Мужская медицинская одежда'
+        title = 'Мужская коллекия'
     else:
+        title = 'Женская коллекия'
         slider_text = 'Женская медицинская одежда'
     collections = Collection.objects.filter(subcategory__name_slug=subcat_slug)
 
@@ -114,8 +119,10 @@ def subcategory(request,cat_slug,subcat_slug):
 def category(request,cat_slug):
     if cat_slug == 'man':
         slider_text ='Мужская медицинская одежда'
+        title = 'Мужская коллекия'
     else:
         slider_text = 'Женская медицинская одежда'
+        title = 'Женская коллекия'
     subCats = SubCategory.objects.filter(category__name_slug=cat_slug)
     return render(request, 'pages/category.html', locals())
 

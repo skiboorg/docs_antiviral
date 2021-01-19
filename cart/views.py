@@ -38,6 +38,7 @@ def get_all_items(client=None,guest=None):
         return allitems
 
 def show_cart(request):
+    title = 'DOC’S - медицинская одежда для современных врачей'
     cities = City.objects.all()
     delivery_types = DeliveryType.objects.all()
     return render(request, 'pages/cart.html', locals())

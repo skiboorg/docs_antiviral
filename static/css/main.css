@@ -66,6 +66,10 @@ menu li {
   list-style: none;
 }
 
+.panel ul li{
+  list-style: disc !important;
+}
+
 caption,
 th {
   text-align: left;
@@ -607,6 +611,7 @@ button:focus {
 
 .header-icons__cart {
   position: relative;
+  cursor: pointer;
 }
 
 .header-icons__cart--number {

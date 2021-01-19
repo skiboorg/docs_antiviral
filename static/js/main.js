@@ -130,8 +130,13 @@ var app = new Vue({
             }).then(res=>res.json())
                 .then(res => {
                     console.log(res)
-                    res.length>0 ? this.selectResults=res : this.cityselectDropVisible = false
-                    this.cityselectDropVisible = true
+                    if (res.length>0){
+                        this.selectResults=res
+                        this.cityselectDropVisible = true
+                    }else{
+                        this.selectResults=[]
+                        this.cityselectDropVisible = false
+                    }
                 })
             }else {
                 this.cityselectDropVisible = false

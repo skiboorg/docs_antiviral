@@ -32,7 +32,7 @@ class DeliveryType(models.Model):
 class City(models.Model):
     type = models.ForeignKey(DeliveryType,on_delete=models.CASCADE,null=True,blank=False,verbose_name='Относится к ')
     name = models.CharField('Название города', max_length=255, blank=False, null=True)
-    name_lower = models.CharField('Название города', max_length=255, blank=False, null=True)
+    name_lower = models.CharField('Название города', max_length=255, blank=False, null=True,editable=False)
     price = models.IntegerField('Стоимость доставки',blank=False,null=True)
 
     def __str__(self):
