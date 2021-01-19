@@ -51,7 +51,7 @@
                         <div v-if="cdekSelected">
                         <div class="city-select">
 
-                            <input ref="citySelect" type="text" @keyup="citySearch" v-model="selectedCity" placeholder="Начните вводить город">
+                            <input ref="citySelect" type="text"  @keyup="citySearch" v-model="selectedCity" placeholder="Начните вводить город">
                             <div class="city-select__result" :class=" {'cityResultActive': selectResults.length > 0 && cityselectDropVisible}">
                                 <p @click="selectCity(result.price,result.name),cityselectDropVisible=false"
                                    v-for="result in selectResults" :key="result.id" >[[result.name]]</p>

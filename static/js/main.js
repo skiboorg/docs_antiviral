@@ -132,9 +132,6 @@ var app = new Vue({
                     console.log(res)
                     res.length>0 ? this.selectResults=res : this.cityselectDropVisible = false
                     this.cityselectDropVisible = true
-
-
-
                 })
             }else {
                 this.cityselectDropVisible = false
@@ -142,12 +139,9 @@ var app = new Vue({
         },
         selectCity(price,name){
             console.log(price,name)
-
             this.selectedCity=name
             this.deliveryPrice=price
             this.$refs.city_input.value = name
-
-
         },
         selectColor(index){
             console.log(index)

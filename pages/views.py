@@ -200,7 +200,7 @@ def add_item(request):
         storage = request.GET.get('storage')
         item = request.GET.get('item')
         item = ItemAtStore.objects.get(item_type_id=item,store_id=storage)
-        item.item_number+=1
+        item.item_number += 1
         item.save()
         return HttpResponseRedirect('/storage/')
 def del_item(request):
@@ -217,7 +217,7 @@ def del_item(request):
 def search_city(request):
     body = json.loads(request.body)
     return_dict = []
-    cities = City.objects.filter(type_id=body['delivery'], name_lower__contains=body['city'])
+    cities = City.objects.filter(type_id=body['delivery'], name_lower__contains=body['city'].lower())
     for c in cities:
         return_dict.append(
             {
