@@ -1,56 +1,72 @@
 {% extends 'basic.html' %}
 {% load static %}
 {% block content %}
-      <section class="categories">
+    <section class="categories">
         <div class="container">
             <div class="categories-wrapper">
-
                 <div @click="this.window.location.href='{% url 'category' 'man' %}'" class="categories-item item1">
                     <p class="categories-item__text man">МУЖЧИНАМ</p>
                 </div>
-
                 <div @click="this.window.location.href='{% url 'category' 'woman' %}'" class="categories-item item2">
                     <p class="categories-item__text woman">ЖЕНЩИНАМ</p>
                 </div>
             </div>
-
         </div>
     </section>
     <section>
+        <div class="container">
+               <div class="offer-slider">
+                            {% for banner in banners %}
+                                <div {% if banner.url %} onclick="window.location.href={{ banner.url }}" style="cursor: pointer" {% endif %} class="offer-banner-item">
+                                    <img src="{{ banner.image.url }}" alt="">
+                                    <div class="offer-banner-item-text">
+                                        {% if banner.text %}
+                                            <h3>{{ banner.text }}</h3>
+                                        {% endif %}
 
-        <div {% if banner.url %} onclick="window.location.href={{ banner.url }}" {% endif %} class="container simple-image" style="background: url(../media/{{ banner.image }}) no-repeat center;">
+                                        {% if banner.btn_text %}
+                                            <a href="{{ banner.btn_url }}" class="btn">{{ banner.btn_text }}</a>
+                                        {% endif %}
+
+                                    </div>
+                                </div><!--// offer-banner-item-->
+                            {% endfor %}
+                        </div>
 
         </div>
+
+{#        <div {% if banner.url %} onclick="window.location.href={{ banner.url }}" {% endif %} class="container simple-image" style="background: url(../media/{{ banner.image }}) no-repeat center;"></div>#}
+
     </section>
     {% for collection in collections %}
-    <section class="collection">
-        <div class="container">
-            <h3 class="section-header">
-                {{ collection.name }}
-            </h3>
-            <p class="section-header__link"><a href="{% url 'subcategory' collection.subcategory.category.name_slug collection.subcategory.name_slug %}">Смотреть полностью</a></p>
-            <div class="collection-wrapper">
-                {% for item in collection.items.all %}
-                    {% if forloop.counter < 4 %}
-                     <div class="collection-item">
-                    <p class="collection-item-name">{{ item.collection.subcategory.name }}</p>
-                    <div class="collection-item__img" >
-                          <a href="{% url 'item' collection.subcategory.category.name_slug collection.subcategory.name_slug item.name_slug %}">
-                           <img src="{{ item.images.first.image.url }}" alt="">
-                        </a>
+        <section class="collection">
+            <div class="container">
+                <h3 class="section-header">
+                    {{ collection.name }}
+                </h3>
+                <p class="section-header__link"><a href="{% url 'subcategory' collection.subcategory.category.name_slug collection.subcategory.name_slug %}">Смотреть полностью</a></p>
+                <div class="collection-wrapper">
+                    {% for item in collection.items.all %}
+                        {% if forloop.counter < 4 %}
+                            <div class="collection-item">
+                                <p class="collection-item-name">{{ item.collection.subcategory.name }}</p>
+                                <div class="collection-item__img" >
+                                    <a href="{% url 'item' collection.subcategory.category.name_slug collection.subcategory.name_slug item.name_slug %}">
+                                        <img src="{{ item.images.first.image.url }}" alt="">
+                                    </a>
 
-                    </div>
-                    <p class="collection-item__name">{{ item.name }}</p>
-                    <p class="collection-item__price">{{ item.price }} ₽</p>
+                                </div>
+                                <p class="collection-item__name">{{ item.name }}</p>
+                                <p class="collection-item__price">{{ item.price }} ₽</p>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+
+
                 </div>
-                    {% endif %}
-
-                {% endfor %}
-
-
             </div>
-        </div>
-    </section>
+        </section>
     {% endfor %}
 
 
@@ -99,4 +115,20 @@
         </div>
 
     </section>
+{% endblock %}
+{% block js %}
+    {{ block.super }}
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+        <script>
+            var slider1 = tns({
+                container: '.offer-slider',
+                items: 1,
+                autoplay: true,
+                "autoHeight": true,
+                nav: false,
+                controls:false,
+                mouseDrag:true,
+            });
+        </script>
+
 {% endblock %}

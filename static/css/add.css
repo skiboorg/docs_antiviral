@@ -154,3 +154,7 @@ td {
     .modal-content {width: 100%}
     .close {right: 10px;top: 10px}
 }
+
+.tns-outer button{
+    display: none;
+}
