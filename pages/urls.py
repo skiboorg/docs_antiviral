@@ -21,6 +21,7 @@ urlpatterns = [
     path('new_item/', views.new_item, name='new_item'),
     path('create_item/', views.create_item, name='create_item'),
     path('search_city/', views.search_city, name='search_city'),
+    path('get_cities/', views.get_cities, name='get_cities'),
 
 
 

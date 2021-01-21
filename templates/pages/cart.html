@@ -51,12 +51,21 @@
                         <div v-if="cdekSelected">
                         <div class="city-select">
 
-                            <input ref="citySelect" type="text"  @keyup="citySearch" v-model="selectedCity" placeholder="Начните вводить город">
-                            <div class="city-select__result" :class=" {'cityResultActive': selectResults.length > 0 && cityselectDropVisible}">
-                                <p @click="selectCity(result.price,result.name),cityselectDropVisible=false"
-                                   v-for="result in selectResults" :key="result.id" >[[result.name]]</p>
-
-                            </div>
+{#                            <input ref="citySelect" type="text"  @keyup="citySearch" v-model="selectedCity" placeholder="Начните вводить город">#}
+{#                            <div class="city-select__result" :class=" {'cityResultActive': selectResults.length > 0 && cityselectDropVisible}">#}
+{#                                <p @click="selectCity(result.price,result.name),cityselectDropVisible=false"#}
+{#                                   v-for="result in selectResults" :key="result.id" >[[result.name]]</p>#}
+{##}
+{#                            </div>#}
+                            <el-select v-model="selectedCity" filterable placeholder="Выберите город" @change="citySelectChange" :no-data-text="'Нет данных'">
+                                <span slot="empty" style="padding: 10px; display: block;">Нет данных</span>
+                                <el-option
+                                  v-for="item in sities"
+                                  :key="item.id"
+                                  :label="item.name"
+                                  :value="item.id">
+                                </el-option>
+                              </el-select>
                         </div>
 {#                            <select id="city_select" class="mb-15" style="width: 100%" @change="handleCityChange" name="delivery_price" v-model="deliveryPrice">#}
 {#                                <option value="0">Выберите город</option>#}

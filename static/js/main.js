@@ -79,6 +79,9 @@ var app = new Vue({
         selectResults:[
 
         ],
+        sities:[
+        ],
+
         selectedDeliveryType:null,
         selectedColor:999,
         selectedColorName:null,
@@ -113,16 +116,21 @@ var app = new Vue({
     },
 
     methods:{
+        citySelectChange(){
+          console.log(this.selectedCity)
+
+            this.selectCity(this.sities.find(x => x.id === this.selectedCity).price,this.sities.find(x => x.id === this.selectedCity).name)
+        },
         citySearch(){
             console.log(this.selectedDeliveryType)
-            if(this.selectedCity.length>1){
+
                 console.log('goggo')
                 let body={
-                city:this.selectedCity,
+                //city:this.selectedCity,
                    delivery:this.selectedDeliveryType
             }
                 let csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
-            fetch(`/search_city/`, {
+            fetch(`/get_cities/`, {
                 method: 'post',
                 body: JSON.stringify(body),
                 headers: { "X-CSRFToken": csrfmiddlewaretoken },
@@ -130,23 +138,22 @@ var app = new Vue({
             }).then(res=>res.json())
                 .then(res => {
                     console.log(res)
-                    if (res.length>0){
-                        this.selectResults=res
-                        this.cityselectDropVisible = true
-                    }else{
-                        this.selectResults=[]
-                        this.cityselectDropVisible = false
-                    }
+                    this.sities = res
+                    // if (res.length>0){
+                    //     this.selectResults=res
+                    //     this.cityselectDropVisible = true
+                    // }else{
+                    //     this.selectResults=[]
+                    //     this.cityselectDropVisible = false
+                    // }
                 })
-            }else {
-                this.cityselectDropVisible = false
-            }
+
         },
         selectCity(price,name){
             console.log(price,name)
-            this.selectedCity=name
             this.deliveryPrice=price
             this.$refs.city_input.value = name
+
         },
         selectColor(index){
             console.log(index)
@@ -369,6 +376,11 @@ var app = new Vue({
         }
     },
     watch: {
+        selectedDeliveryType: function (val){
+        console.log(val)
+            this.citySearch()
+        },
+
         deliveryPrice: function (val){
             console.log(this.cartTotal)
             console.log(val)
@@ -390,6 +402,7 @@ var app = new Vue({
             for(var item in val){
                 console.log(val[item]['price'])
                 this.cartTotal +=  parseInt(val[item]['price']) * parseInt(val[item]['num'])
+                this.cartTotaldeliveryPrice = this.cartTotal
                 x+=1
             }
 

@@ -234,3 +234,17 @@ def search_city(request):
             }
         )
     return JsonResponse(return_dict,safe=False)
+
+def get_cities(request):
+    body = json.loads(request.body)
+    return_dict = []
+    cities = City.objects.filter(type_id=body['delivery'])
+    for c in cities:
+        return_dict.append(
+            {
+                "id":c.id,
+                "name":c.name,
+                "price":c.price
+            }
+        )
+    return JsonResponse(return_dict,safe=False)

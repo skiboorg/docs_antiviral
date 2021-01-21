@@ -30,8 +30,13 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="//unpkg.com/element-ui/lib/umd/locale/ru-RU.js"></script>
 <script src="{% static 'js/main.js' %}"></script>
 <script>
+
+  ELEMENT.locale(ELEMENT.lang.ru)
+
+
     function getCart() {
         let csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
             let body = {}
