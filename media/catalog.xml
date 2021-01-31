@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="2013-06-20 10:09:18"> 
+    <shop> 
+        <name>Интернет-магазин</name> 
+        <company>Интернет-магазин</company> 
+        <categories> 
+            <category id="1">Мужская одежда</category>
+            <category id="2">Женская одежда</category> 
+            <category id="3" parentId="1">Рубашки</category> 
+            <category id="4" parentId="1">Брюки</category> 
+            <category id="5" parentId="2">Рубашки</category> 
+            <category id="6" parentId="2">Брюки</category> 
+        </categories> 
+        <offers> 
+            <offer id="001" productId="001" quantity="16"> 
+                <url>http://testbitrix.test/catalog/shelves/rack_2_sectional/</url> 
+                <price>200.00</price> 
+                <purchasePrice>100.00</purchasePrice> 
+                <categoryId>3</categoryId> 
+                <picture>http://testbitrix.test/upload/iblock/d2b/d2b25cbdc1f76b8b1672f5e8d1ec6589.JPG</picture> 
+                <name>Рубашка 1</name> 
+                <xmlId>82</xmlId> 
+                <productName>Рубашка 1</productName> 
+                <param name="Артикул" code="article">789789</param> 
+                <param name="Размер" code="size">50</param> 
+                <param name="Рост">150</param> 
+                <param name="Цвет" code="color">белый</param> 
+                <param name="Вес" code="weight">50</param>
+                <unit code="pcs" name="Штука" sym="шт." /> 
+                <vatRate>18</vatRate>
+                <dimensions>100/50.8/150</dimensions>
+                <barcode>012485ab</barcode>
+                <markable>Y</markable>
+            </offer>
+
+        </offers> 
+    </shop> 
+</yml_catalog>
