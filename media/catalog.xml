@@ -27,7 +27,7 @@
                 <param name="Цвет" code="color">белый</param> 
                 <param name="Вес" code="weight">50</param>
                 <unit code="pcs" name="Штука" sym="шт." /> 
-                <vatRate>18</vatRate>
+                <vatRate>none</vatRate>
                 <dimensions>100/50.8/150</dimensions>
                 <barcode>012485ab</barcode>
                 <markable>Y</markable>
