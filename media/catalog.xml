@@ -12,16 +12,16 @@
             <category id="6" parentId="2">Брюки</category> 
         </categories> 
         <offers> 
-            <offer id="001" productId="001" quantity="16"> 
+            <offer id="001" productId="001" quantity="0"> 
                 <url>http://testbitrix.test/catalog/shelves/rack_2_sectional/</url> 
-                <price>200.00</price> 
+                <price>250.00</price> 
                 <purchasePrice>100.00</purchasePrice> 
                 <categoryId>3</categoryId> 
                 <picture>http://testbitrix.test/upload/iblock/d2b/d2b25cbdc1f76b8b1672f5e8d1ec6589.JPG</picture> 
                 <name>Рубашка 1</name> 
                 <xmlId>82</xmlId> 
                 <productName>Рубашка 1</productName> 
-                <param name="Артикул" code="article">789789</param> 
+                <param name="Артикул" code="article">123</param> 
                 <param name="Размер" code="size">50</param> 
                 <param name="Рост">150</param> 
                 <param name="Цвет" code="color">белый</param> 
@@ -33,6 +33,68 @@
                 <markable>Y</markable>
             </offer>
 
+            <offer id="002" productId="002" quantity="0"> 
+                <url>http://testbitrix.test/catalog/shelves/rack_2_sectional/</url> 
+                <price>200.00</price> 
+                <purchasePrice>100.00</purchasePrice> 
+                <categoryId>3</categoryId> 
+                <picture>http://testbitrix.test/upload/iblock/d2b/d2b25cbdc1f76b8b1672f5e8d1ec6589.JPG</picture> 
+                <name>Рубашка 1</name> 
+                <xmlId>83</xmlId> 
+                <productName>Рубашка 2</productName> 
+                <param name="Артикул" code="article">124</param> 
+                <param name="Размер" code="size">46</param> 
+                <param name="Рост">170</param> 
+                <param name="Цвет" code="color">красный</param> 
+                <param name="Вес" code="weight">50</param>
+                <unit code="pcs" name="Штука" sym="шт." /> 
+                <vatRate>none</vatRate>
+                <dimensions>100/50.8/150</dimensions>
+                <barcode>012485ab</barcode>
+                <markable>Y</markable>
+            </offer>
+
+            <offer id="003" productId="003" quantity="0"> 
+                <url>http://testbitrix.test/catalog/shelves/rack_2_sectional/</url> 
+                <price>400.00</price> 
+                <purchasePrice>100.00</purchasePrice> 
+                <categoryId>6</categoryId> 
+                <picture>http://testbitrix.test/upload/iblock/d2b/d2b25cbdc1f76b8b1672f5e8d1ec6589.JPG</picture> 
+                <name>Рубашка 1</name> 
+                <xmlId>84</xmlId> 
+                <productName>Брюки 1</productName> 
+                <param name="Артикул" code="article">125</param> 
+                <param name="Размер" code="size">44</param> 
+                <param name="Рост">150</param> 
+                <param name="Цвет" code="color">белый</param> 
+                <param name="Вес" code="weight">50</param>
+                <unit code="pcs" name="Штука" sym="шт." /> 
+                <vatRate>none</vatRate>
+                <dimensions>100/50.8/150</dimensions>
+                <barcode>012485ab</barcode>
+                <markable>Y</markable>
+            </offer>
+
+            <offer id="004" productId="004" quantity="0"> 
+                <url>http://testbitrix.test/catalog/shelves/rack_2_sectional/</url> 
+                <price>300.00</price> 
+                <purchasePrice>100.00</purchasePrice> 
+                <categoryId>6</categoryId> 
+                <picture>http://testbitrix.test/upload/iblock/d2b/d2b25cbdc1f76b8b1672f5e8d1ec6589.JPG</picture> 
+                <name>Рубашка 1</name> 
+                <xmlId>85</xmlId> 
+                <productName>Брюки 1</productName> 
+                <param name="Артикул" code="article">126</param> 
+                <param name="Размер" code="size">42</param> 
+                <param name="Рост">160</param> 
+                <param name="Цвет" code="color">синий</param> 
+                <param name="Вес" code="weight">50</param>
+                <unit code="pcs" name="Штука" sym="шт." /> 
+                <vatRate>none</vatRate>
+                <dimensions>100/50.8/150</dimensions>
+                <barcode>012485ab</barcode>
+                <markable>Y</markable>
+            </offer>            
         </offers> 
     </shop> 
 </yml_catalog>
